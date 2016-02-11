@@ -21,13 +21,14 @@ public class CPOSearch {
 	
 	public static void main(String[] args) {
 		Properties properties = new Properties();
+		File propsFile = null;
 		try {
-			File propsFile = (args.length > 0)? new File(args[0]) : DEFAULT_PROPERTIES_FILE;
+			propsFile = (args.length > 0)? new File(args[0]) : DEFAULT_PROPERTIES_FILE;
 			properties.load(new FileReader(propsFile));
 			PropertyConfigurator.configure(properties.getProperty("logging.properties.file"));
 		} catch (Exception e) {
 			BasicConfigurator.configure();
-			LOGGER.error("Unable to load program proerties (properties file location should be " + DEFAULT_PROPERTIES_FILE.getAbsolutePath() + " or provided as first program argument).", e);
+			LOGGER.error("Unable to load program proerties (properties file location should be " + propsFile.getAbsolutePath() + ").", e);
 		}
 		
 		LOGGER.info("CPOSearch started...");

@@ -34,5 +34,3 @@ wheels,          String,  STARTS_WITH, 21
 price,           Integer, LESS_THAN,   80000,    required
 price,           Integer, LESS_THAN,   70000
 miles,           Integer, LESS_THAN,   40000,    required
-soundStudio,     Boolean, EQUALS,      true,     HIGH
-dualChargers,    Boolean, EQUALS,      true
