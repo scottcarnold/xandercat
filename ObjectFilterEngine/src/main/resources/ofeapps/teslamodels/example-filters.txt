@@ -1,0 +1,38 @@
+
+# Valid values for fieldName and fieldType are:
+#   vin (String), cpoInv (String), location (String), trim (String), aptp (String), 
+#   dualMotor (Boolean), rearFacingSeats (Boolean), coldWeatherPackage (Boolean), 
+#   soundStudio (Boolean), superchargerEnabled (Boolean), smartAirSuspension (Boolean), 
+#   dualChargers (Boolean), color (String), roof (String), wheels (String), 
+#   interior (String), year (Integer), miles (Integer), price (Integer)
+#
+# Valid values for matchType are:
+#   * String:  STARTS_WITH, ENDS_WITH, EQUALS, CONTAINS 
+#   * Integer:  LESS_THAN, GREATER_THAN, EQUALS
+#   * Boolean:  EQUALS
+#
+# Valid values for weight are: 
+#   required, excluded, low, medium, high, maximum, [floating point number between 0 and 1] 
+#
+# Match value can be:
+#  * String:  any string, can be wrapped in quotes (value will be case insensitive)
+#  * Integer:  a whole number
+#  * Boolean:  true, false
+
+
+threshold,       0.75
+trim,            String,  STARTS_WITH, S85,      required
+location,        String,  EQUALS,      San Francisco
+location,        String,  STARTS_WITH, San Diego
+interior,        String,  CONTAINS,    Nappa,    HIGH
+interior,        String,  CONTAINS,    Black,    excluded
+roof,            String,  EQUALS,      Pano,     required
+color,           String,  CONTAINS,    Red,      excluded
+color,           String,  CONTAINS,    White
+color,           String,  CONTAINS,    Brown,    LOW
+wheels,          String,  STARTS_WITH, 21
+price,           Integer, LESS_THAN,   80000,    required
+price,           Integer, LESS_THAN,   70000
+miles,           Integer, LESS_THAN,   40000,    required
+soundStudio,     Boolean, EQUALS,      true,     HIGH
+dualChargers,    Boolean, EQUALS,      true
