@@ -352,4 +352,9 @@ public class CSVFormatter<T> {
 			method.invoke(object, value);
 		}
 	}
+	
+	public CSVFormatter<T> fields(String... fields) throws Exception {
+		setFields(fields);
+		return this;
+	}
 }
