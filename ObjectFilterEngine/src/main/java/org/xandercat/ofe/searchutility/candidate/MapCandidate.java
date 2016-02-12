@@ -30,11 +30,19 @@ public class MapCandidate extends LinkedHashMap<String, String> implements Candi
 
 	@Override
 	public String getShortDescription() {
-		return toString();
+		if (containsKey("shortDescription")) {
+			return get("shortDescription");
+		} else {
+			return toString();
+		}
 	}
 
 	@Override
 	public String getFullDescription() {
-		return toString();
+		if (containsKey("fullDescription")) {
+			return get("fullDescription");
+		} else {
+			return toString();
+		}
 	}
 }
