@@ -22,6 +22,9 @@ import org.xandercat.ofe.searchutility.CandidateSource;
  * and also java.util.Date if the properties contains a date format under
  * the "date.format" key.
  * 
+ * The candidate class type is expected to be under the properties key "candidate.class";
+ * otherwise it will assume you want the generic MapCandidate class.
+ * 
  * @author Scott Arnold
  *
  * @param <T>
@@ -35,10 +38,9 @@ public class CSVCandidateSource<T extends Candidate> implements CandidateSource<
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void initialize(Properties properties) throws Exception {
+	public void initialize(Properties properties, Class<T> candidateClass) throws Exception {
 		this.file = new File(properties.getProperty("file", DEFAULT_FILE_NAME));
-		Class<?> clazz = Class.forName(properties.getProperty("class"));
-		formatter = new CSVFormatter(clazz);
+		formatter = new CSVFormatter(candidateClass);
 		if (properties.containsKey("date.format")) {
 			final String dateFormat = properties.getProperty("date.format");
 			formatter.addValueFormatter(Date.class, new ValueFormatter<Date>() {

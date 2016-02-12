@@ -18,7 +18,7 @@ public class EVCPOOfflineHtmlCandidateSource extends EVCPOHtmlCandidateSource {
 	private File htmlFile;
 	
 	@Override
-	public void initialize(Properties properties) throws Exception {
+	public void initialize(Properties properties, Class<CPOModelS> candidateClass) throws Exception {
 		this.htmlFile = new File(properties.getProperty("file"));
 	}
 

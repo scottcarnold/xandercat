@@ -39,8 +39,8 @@ public class MailResultDestination<T extends Candidate> extends TextMessageResul
 	private Properties properties;
 	
 	@Override
-	public void initialize(Properties properties) {
-		super.initialize(properties);
+	public void initialize(Properties properties, Class<T> candidateClass) {
+		super.initialize(properties, candidateClass);
 		this.properties = properties;	
 	}
 

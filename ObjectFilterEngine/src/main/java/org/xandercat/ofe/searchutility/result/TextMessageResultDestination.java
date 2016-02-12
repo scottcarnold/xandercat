@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.xandercat.ofe.Candidate;
 import org.xandercat.ofe.CandidateChange;
 import org.xandercat.ofe.FilterGroup;
@@ -26,6 +27,7 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 
 	public static final String DEFAULT_REPORT_TITLE = "Search Utility Results";
 	
+	private static final Logger LOGGER = Logger.getLogger(TextMessageResultDestination.class);
 	private static final NumberFormat SCORE_FORMAT = NumberFormat.getPercentInstance();
 	
 	private String reportTitle = DEFAULT_REPORT_TITLE;
@@ -33,7 +35,7 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 	
 	
 	@Override
-	public void initialize(Properties properties) {
+	public void initialize(Properties properties, Class<T> candidateClass) {
 		this.reportTitle = properties.getProperty("report.title", DEFAULT_REPORT_TITLE);
 		this.issueMessageOnlyWhenResultsChanged = Boolean.parseBoolean(
 				properties.getProperty("report.only.when.changes.exist", "true"));
@@ -106,6 +108,8 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 				}
 			}
 			handleTextMessage(sb.toString());
+		} else {
+			LOGGER.info("Search results have not changed; no notification was sent.");
 		}
 	}
 

@@ -23,11 +23,12 @@ public interface ResultDestination<T extends Candidate> {
 	 * the main SearchUtility properties whose keys start with the SearchUtility.RESULT_DESTINATION_PROPERTY_PREFIX;
 	 * property keys used will have the prefix truncated.
 	 * 
-	 * @param properties    properties for the result destination
+	 * @param properties     properties for the result destination
+	 * @param candidateClass the candidate class
 	 * 
 	 * @throws Exception   if any errors occur
 	 */	
-	public void initialize(Properties properties) throws Exception;
+	public void initialize(Properties properties, Class<T> candidateClass) throws Exception;
 	
 	/**
 	 * Does something with the outcome of the search.

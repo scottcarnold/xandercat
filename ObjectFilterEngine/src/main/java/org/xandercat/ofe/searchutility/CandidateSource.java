@@ -17,11 +17,12 @@ public interface CandidateSource<T> {
 	 * the main SearchUtility properties whose keys start with the SearchUtility.CANDIDATE_SOURCE_PROPERTY_PREFIX;
 	 * property keys used will have the prefix truncated.
 	 * 
-	 * @param properties    properties for the candidate source
+	 * @param properties     properties for the candidate source
+	 * @param candidateClass the candidate class
 	 * 
 	 * @throws Exception   if any errors occur
 	 */
-	public void initialize(Properties properties) throws Exception;
+	public void initialize(Properties properties, Class<T> candidateClass) throws Exception;
 	
 	/**
 	 * Return the collection of candidates to search.

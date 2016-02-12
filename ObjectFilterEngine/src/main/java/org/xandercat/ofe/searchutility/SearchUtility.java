@@ -3,6 +3,7 @@ package org.xandercat.ofe.searchutility;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,12 +11,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.xandercat.ofe.Candidate;
 import org.xandercat.ofe.CandidateChange;
 import org.xandercat.ofe.ObjectFilterEngine;
 import org.xandercat.ofe.ScoredCandidate;
 import org.xandercat.ofe.filter.AttributeFilter;
+import org.xandercat.ofe.searchutility.candidate.MapCandidate;
 
 /**
  * Generic search utility for running a collection of objects against an object filtering engine
@@ -32,12 +36,39 @@ public class SearchUtility<T extends Candidate> {
 	public static final String RESULT_DESTINATION_PROPERTY_PREFIX = "result.destination.";
 	
 	private static final Logger LOGGER = Logger.getLogger(SearchUtility.class);
+	private static final File DEFAULT_PROPERTIES_FILE = new File("searchutility.properties");
 	private static final String DEFAULT_PREVIOUS_RESULTS_FILE_NAME = "previous-results.dat";
 	
 	private Properties properties;
+	private Class<T> candidateClass;
 	private FilterSource filterSource;
 	private CandidateSource<T> candidateSource;
 	private ResultDestination<T> resultDestination;
+	
+	public static void main(String[] args) {
+		Properties properties = new Properties();
+		File propsFile = null;
+		try {
+			propsFile = (args.length > 0)? new File(args[0]) : DEFAULT_PROPERTIES_FILE;
+			properties.load(new FileReader(propsFile));
+			PropertyConfigurator.configure(properties.getProperty("logging.properties.file"));
+		} catch (Exception e) {
+			BasicConfigurator.configure();
+			LOGGER.error("Unable to load program proerties (properties file location should be " + propsFile.getAbsolutePath() + ").", e);
+		}
+		
+		LOGGER.info("Search started...");
+		try {
+			@SuppressWarnings("rawtypes")
+			SearchUtility searchUtility = new SearchUtility(properties);
+			searchUtility.searchAndNotify();
+		} catch (Exception e) {
+			LOGGER.error("Unable to complete search.", e);
+			System.exit(-1);
+		}
+		LOGGER.info("Search complete.");
+		System.exit(0);
+	}
 	
 	private static Properties getTrimmedProperties(String propertyPrefix, Properties properties) {
 		Properties trimmedProperties = new Properties();
@@ -49,9 +80,42 @@ public class SearchUtility<T extends Candidate> {
 		return trimmedProperties;
 	}
 	
-	@SuppressWarnings("unchecked")
+	/**
+	 * Construct the search utility with the given properties.  When using this constructor, the 
+	 * candidate class name must be provided in the properties under the property
+	 * key CANDIDATE_SOURCE_PROPERTY_PREFIX + "candidate.class"; otherwise, it will assume
+	 * you want to use the generic MapCandidate class.
+	 * 
+	 * @param properties  search utility properties
+	 * 
+	 * @throws Exception
+	 */
 	public SearchUtility(Properties properties) throws Exception {
+		this(properties, null);
+	}
+	
+	/**
+	 * Construct the search utility with the given properties and candidate class.  If
+	 * the candidateClass is null, it will assume you want to use the generic MapCandidate class.
+	 * 
+	 * @param properties      search utility properties
+	 * @param candidateClass  the candidate class
+	 * 
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public SearchUtility(Properties properties, Class<T> candidateClass) throws Exception {
 		this.properties = properties;
+		if (candidateClass == null) {
+			String candidateClassName = properties.getProperty(CANDIDATE_SOURCE_PROPERTY_PREFIX + "candidate.class");
+			if (candidateClassName == null) {
+				this.candidateClass = (Class<T>) MapCandidate.class;
+			} else {
+				this.candidateClass = (Class<T>) Class.forName(candidateClassName);
+			}
+		} else {
+			this.candidateClass = candidateClass;
+		}
 		String filterSourceClassName = properties.getProperty(FILTER_SOURCE_PROPERTY_PREFIX + "class");
 		String candidateSourceClassName = properties.getProperty(CANDIDATE_SOURCE_PROPERTY_PREFIX + "class");
 		String resultDestinationClassName = properties.getProperty(RESULT_DESTINATION_PROPERTY_PREFIX + "class");
@@ -59,8 +123,8 @@ public class SearchUtility<T extends Candidate> {
 		this.candidateSource = (CandidateSource<T>) Class.forName(candidateSourceClassName).newInstance();
 		this.resultDestination = (ResultDestination<T>) Class.forName(resultDestinationClassName).newInstance();
 		this.filterSource.initialize(getTrimmedProperties(FILTER_SOURCE_PROPERTY_PREFIX, properties));
-		this.candidateSource.initialize(getTrimmedProperties(CANDIDATE_SOURCE_PROPERTY_PREFIX, properties));
-		this.resultDestination.initialize(getTrimmedProperties(RESULT_DESTINATION_PROPERTY_PREFIX, properties));
+		this.candidateSource.initialize(getTrimmedProperties(CANDIDATE_SOURCE_PROPERTY_PREFIX, properties), this.candidateClass);
+		this.resultDestination.initialize(getTrimmedProperties(RESULT_DESTINATION_PROPERTY_PREFIX, properties), this.candidateClass);
 	}
 	
 	public void searchAndNotify() {
