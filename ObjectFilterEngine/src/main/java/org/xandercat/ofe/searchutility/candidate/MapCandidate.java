@@ -1,5 +1,6 @@
 package org.xandercat.ofe.searchutility.candidate;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 import org.xandercat.ofe.Candidate;
@@ -12,7 +13,7 @@ import org.xandercat.ofe.Candidate;
  * 
  * @author Scott Arnold
  */
-public class MapCandidate extends LinkedHashMap<String, String> implements Candidate {
+public class MapCandidate extends LinkedHashMap<String, String> implements Candidate, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
