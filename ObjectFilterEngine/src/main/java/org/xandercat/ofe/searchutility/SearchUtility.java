@@ -83,8 +83,7 @@ public class SearchUtility<T extends Candidate> {
 	/**
 	 * Construct the search utility with the given properties.  When using this constructor, the 
 	 * candidate class name must be provided in the properties under the property
-	 * key CANDIDATE_SOURCE_PROPERTY_PREFIX + "candidate.class"; otherwise, it will assume
-	 * you want to use the generic MapCandidate class.
+	 * key "candidate.class"; otherwise, it will assume you want to use the generic MapCandidate class.
 	 * 
 	 * @param properties  search utility properties
 	 * 
@@ -107,7 +106,7 @@ public class SearchUtility<T extends Candidate> {
 	public SearchUtility(Properties properties, Class<T> candidateClass) throws Exception {
 		this.properties = properties;
 		if (candidateClass == null) {
-			String candidateClassName = properties.getProperty(CANDIDATE_SOURCE_PROPERTY_PREFIX + "candidate.class");
+			String candidateClassName = properties.getProperty("candidate.class");
 			if (candidateClassName == null) {
 				this.candidateClass = (Class<T>) MapCandidate.class;
 			} else {
