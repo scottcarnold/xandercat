@@ -107,6 +107,7 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 					sb.append(fieldName).append(" ").append(filter.getDescription()).append("\n");
 				}
 			}
+			LOGGER.info("Search results have changed; sending notification.");
 			handleTextMessage(sb.toString());
 		} else {
 			LOGGER.info("Search results have not changed; no notification was sent.");

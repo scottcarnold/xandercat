@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.xandercat.ofe.ReflectionUtil;
+
 /**
  * Formatter class for converting between objects and CSV strings.  CSV strings parsed or formatted by this
  * formatter conform to the basic escape conventions used by Microsoft Excel.  
@@ -73,7 +75,7 @@ public class CSVFormatter<T> {
 		});
 		valueFormatters.put(Integer.class, new ValueFormatter<Integer>() {
 			public Integer parse(String value) {
-				return Integer.valueOf(value);
+				return (value == null || value.length() == 0)? null : Integer.valueOf(value);
 			}
 			public String format(Integer value) {
 				return (value == null)? "" : value.toString();
@@ -89,7 +91,7 @@ public class CSVFormatter<T> {
 		});
 		valueFormatters.put(Long.class, new ValueFormatter<Long>() {
 			public Long parse(String value) {
-				return Long.valueOf(value);
+				return (value == null || value.length() == 0)? null : Long.valueOf(value);
 			}
 			public String format(Long value) {
 				return (value == null)? "" : value.toString();
@@ -97,13 +99,53 @@ public class CSVFormatter<T> {
 		});
 		valueFormatters.put(Float.class, new ValueFormatter<Float>() {
 			public Float parse(String value) {
-				return Float.valueOf(value);
+				return (value == null || value.length() == 0)? null : Float.valueOf(value);
 			}
 			public String format(Float value) {
 				return NumberFormat.getNumberInstance().format(value);
 			}
 		});
 		valueFormatters.put(Double.class, new ValueFormatter<Double>() {
+			public Double parse(String value) {
+				return (value == null || value.length() == 0)? null : Double.valueOf(value);
+			}
+			public String format(Double value) {
+				return NumberFormat.getNumberInstance().format(value);
+			}
+		});
+		valueFormatters.put(Boolean.TYPE, new ValueFormatter<Boolean>() {
+			public Boolean parse(String value) {
+				return Boolean.valueOf(value);
+			}
+			public String format(Boolean value) {
+				return (value == null)? "" : value.toString();
+			}
+		});
+		valueFormatters.put(Integer.TYPE, new ValueFormatter<Integer>() {
+			public Integer parse(String value) {
+				return Integer.valueOf(value);
+			}
+			public String format(Integer value) {
+				return (value == null)? "" : value.toString();
+			}
+		});
+		valueFormatters.put(Long.TYPE, new ValueFormatter<Long>() {
+			public Long parse(String value) {
+				return Long.valueOf(value);
+			}
+			public String format(Long value) {
+				return (value == null)? "" : value.toString();
+			}
+		});
+		valueFormatters.put(Float.TYPE, new ValueFormatter<Float>() {
+			public Float parse(String value) {
+				return Float.valueOf(value);
+			}
+			public String format(Float value) {
+				return NumberFormat.getNumberInstance().format(value);
+			}
+		});
+		valueFormatters.put(Double.TYPE, new ValueFormatter<Double>() {
 			public Double parse(String value) {
 				return Double.valueOf(value);
 			}
@@ -155,7 +197,7 @@ public class CSVFormatter<T> {
 		} else {
 			for (int i=0; i<fields.length; i++) {
 				String field = fields[i];
-				Method method = clazz.getMethod("get" + field.substring(0, 1).toUpperCase() + field.substring(1), (Class<?>[]) null);
+				Method method = ReflectionUtil.getterMethod(field, clazz);
 				classes[i] = method.getReturnType();
 			}
 		}
@@ -333,12 +375,7 @@ public class CSVFormatter<T> {
 		if (object instanceof Map) {
 			return ((Map) object).get(field);
 		} else {
-			Method method = null;
-			try {
-				method = object.getClass().getMethod("get" + field.substring(0, 1).toUpperCase() + field.substring(1), (Class<?>[]) null);
-			} catch (NoSuchMethodException e) {
-				method = object.getClass().getMethod("is" + field.substring(0, 1).toUpperCase() + field.substring(1), (Class<?>[]) null);
-			}
+			Method method = ReflectionUtil.getterMethod(field, object.getClass());
 			return method.invoke(object, (Object[]) null);
 		}
 	}
@@ -348,7 +385,7 @@ public class CSVFormatter<T> {
 		if (object instanceof Map) {
 			((Map) object).put(field, value);
 		} else {
-			Method method = object.getClass().getMethod("set" + field.substring(0, 1).toUpperCase() + field.substring(1), valueClass);
+			Method method = ReflectionUtil.setterMethod(field, valueClass, object.getClass());
 			method.invoke(object, value);
 		}
 	}

@@ -76,8 +76,7 @@ public class ObjectFilterEngine<T extends Candidate> {
 			String field = entry.getKey();
 			FilterGroup<?> filter = entry.getValue();
 			maxCombinedWeight += filter.getCandidateMaxWeight().getWeight();
-			String getterName = getterName(field, filter.getFilteredClass());
-			Method getterMethod = item.getClass().getMethod(getterName, (Class<?>[]) null);
+			Method getterMethod = ReflectionUtil.getterMethod(field, filter.getFilteredClass(), item.getClass());
 			Object value = getterMethod.invoke(item, (Object[]) null);
 			if (filter.isCandidate(value)) {
 				combinedWeight += filter.getCandidateWeight(value).getWeight();
@@ -176,8 +175,8 @@ public class ObjectFilterEngine<T extends Candidate> {
 		return differences;
 	}
 	
-	private String getterName(String fieldName, Class<?> filteredClass) {
-		String prefix = (filteredClass == Boolean.TYPE)? "is" : "get";
-		return prefix + fieldName.substring(0,  1).toUpperCase() + fieldName.substring(1);
-	}
+//	private String getterName(String fieldName, Class<?> filteredClass) {
+//		String prefix = (filteredClass == Boolean.TYPE)? "is" : "get";
+//		return prefix + fieldName.substring(0,  1).toUpperCase() + fieldName.substring(1);
+//	}
 }

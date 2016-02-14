@@ -107,6 +107,22 @@ public class CSVFormatterTest {
 	}
 	
 	@Test
+	public void testFormatAndParseWithEmptyValues() throws Exception {
+		CSVFormatter<TestClass> formatter = new CSVFormatter<TestClass>(TestClass.class)
+				.fields("string1","integer1","boolean1");
+			TestClass tc = new TestClass("", null, Boolean.TRUE);
+			String csvString = formatter.format(tc);
+			assertEquals(",,true", csvString);
+			TestClass tc2 = formatter.parse(csvString);
+			assertEquals(tc, tc2);		
+			tc = new TestClass("one", null, null);
+			csvString = formatter.format(tc);
+			assertEquals("one,,", csvString);
+			tc2 = formatter.parse(csvString);
+			assertEquals(tc, tc2);
+	}
+	
+	@Test
 	public void testForceAsString() throws Exception {
 		CSVFormatter<TestClass> formatter = new CSVFormatter<TestClass>(TestClass.class)
 			.fields("string1","integer1","boolean1");
