@@ -148,7 +148,7 @@ public class CSVFormatter<T> {
 	 */
 	public void setFields(String[] fields) throws Exception {
 		Class<?>[] classes = new Class<?>[fields.length];
-		if (clazz == Map.class) {
+		if (clazz == Map.class || Map.class.isAssignableFrom(clazz)) {
 			for (int i=0; i<fields.length; i++) {
 				classes[i] = String.class;
 			}
