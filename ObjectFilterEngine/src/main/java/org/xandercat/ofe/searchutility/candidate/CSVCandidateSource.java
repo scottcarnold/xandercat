@@ -34,7 +34,7 @@ public class CSVCandidateSource<T extends Candidate> implements CandidateSource<
 	public static final String DEFAULT_FILE_NAME = "candidates.txt";
 	
 	private File file;
-	private CSVFormatter<T> formatter;
+	private CSVFormatter<T> formatter; 
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override

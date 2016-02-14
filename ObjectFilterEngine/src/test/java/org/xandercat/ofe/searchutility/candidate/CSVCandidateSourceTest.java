@@ -34,7 +34,7 @@ public class CSVCandidateSourceTest {
 		Collection<MapCandidate> candidates = source.getCandidates();
 		assertEquals(2, candidates.size());
 		MapCandidate[] mc = new MapCandidate[2];
-		mc = candidates.toArray(mc);
+		mc = candidates.toArray(mc); 
 		assertEquals("0", mc[0].get("id"));
 		assertEquals("this is a test", mc[0].get("field2"));
 		assertEquals("my short desc 0", mc[0].get("shortDescription"));
