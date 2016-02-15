@@ -7,6 +7,64 @@ import java.util.Collections;
 
 public class CSVFormatterTest {
 
+	public static class TestClassWithNesting {
+		
+		private String string1;
+		private TestClass testClass1;
+		
+		public TestClassWithNesting() {
+		}
+		public TestClassWithNesting(String string1, TestClass testClass1) {
+			this.string1 = string1;
+			this.testClass1 = testClass1;
+		}
+		public String getString1() {
+			return string1;
+		}
+		public void setString1(String string1) {
+			this.string1 = string1;
+		}
+		public TestClass getTestClass1() {
+			return testClass1;
+		}
+		public void setTestClass1(TestClass testClass1) {
+			this.testClass1 = testClass1;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((string1 == null) ? 0 : string1.hashCode());
+			result = prime * result + ((testClass1 == null) ? 0 : testClass1.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			TestClassWithNesting other = (TestClassWithNesting) obj;
+			if (string1 == null) {
+				if (other.string1 != null)
+					return false;
+			} else if (!string1.equals(other.string1))
+				return false;
+			if (testClass1 == null) {
+				if (other.testClass1 != null)
+					return false;
+			} else if (!testClass1.equals(other.testClass1))
+				return false;
+			return true;
+		}
+		@Override
+		public String toString() {
+			return "TestClassWithNesting [string1=" + string1 + ", testClass1=" + testClass1 + "]";
+		}
+	}
+	
 	public static class TestClass {
 	
 		private String string1;
@@ -130,5 +188,16 @@ public class CSVFormatterTest {
 		TestClass tc = new TestClass("string", Integer.valueOf(34), Boolean.TRUE);
 		String csvString = formatter.format(tc);
 		assertEquals("\"=\"\"string\"\"\",34,true", csvString);	
+	}
+	
+	@Test
+	public void testFormatAndParseWithNesting() throws Exception {
+		CSVFormatter<TestClassWithNesting> formatter = new CSVFormatter<TestClassWithNesting>(TestClassWithNesting.class);
+		formatter.setFields(new String[] { "string1", "testClass1.string1", "testClass1.integer1", "testClass1.boolean1" });
+		TestClassWithNesting tc = new TestClassWithNesting("string1", new TestClass("nestedstring1", Integer.valueOf(12), Boolean.TRUE));
+		String csvString = formatter.format(tc);
+		assertEquals("string1,nestedstring1,12,true", csvString);
+		TestClassWithNesting tc2 = formatter.parse(csvString);
+		assertEquals(tc, tc2);
 	}
 }

@@ -76,8 +76,15 @@ public class ObjectFilterEngine<T extends Candidate> {
 			String field = entry.getKey();
 			FilterGroup<?> filter = entry.getValue();
 			maxCombinedWeight += filter.getCandidateMaxWeight().getWeight();
-			Method getterMethod = ReflectionUtil.getterMethod(field, filter.getFilteredClass(), item.getClass());
-			Object value = getterMethod.invoke(item, (Object[]) null);
+			Method getterMethod = ReflectionUtil.getterMethod(field, filter.getFilteredClass(), item.getClass(), true);
+			Object value = null;
+			try {
+				Object invocationTarget = ReflectionUtil.getInvocationTarget(field, item, false);
+				value = getterMethod.invoke(invocationTarget, (Object[]) null);
+			} catch (NullPointerException npe) {
+				// this means a nested object on a complex path was null; in this case, just treat as a null value
+				value = null;
+			} 
 			if (filter.isCandidate(value)) {
 				combinedWeight += filter.getCandidateWeight(value).getWeight();
 			} else {

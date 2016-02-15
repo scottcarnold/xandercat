@@ -26,6 +26,9 @@ import org.xandercat.ofe.ReflectionUtil;
  * 
  * When parsing a value for which a ValueFormatter hasn't been defined, an Exception is thrown.
  * 
+ * When formatting or parsing, nested field names are allowed.  When parsing with nested field names, any intermediate
+ * objects that are null will be constructed using default constructors. 
+ * 
  * @author Scott Arnold
  *
  * @param <T> the type to be parsed into or formatted out from; must have default constructor and standard getter and setter methods.
@@ -197,7 +200,7 @@ public class CSVFormatter<T> {
 		} else {
 			for (int i=0; i<fields.length; i++) {
 				String field = fields[i];
-				Method method = ReflectionUtil.getterMethod(field, clazz);
+				Method method = ReflectionUtil.getterMethod(field, clazz, true);
 				classes[i] = method.getReturnType();
 			}
 		}
@@ -375,8 +378,14 @@ public class CSVFormatter<T> {
 		if (object instanceof Map) {
 			return ((Map) object).get(field);
 		} else {
-			Method method = ReflectionUtil.getterMethod(field, object.getClass());
-			return method.invoke(object, (Object[]) null);
+			Method method = ReflectionUtil.getterMethod(field, object.getClass(), true);
+			try {
+				Object invocationTarget = ReflectionUtil.getInvocationTarget(field, object, false);
+				return method.invoke(invocationTarget, (Object[]) null);
+			} catch (NullPointerException npe) {
+				// happens if intermediate object in chain is null; acceptable to return null in this case
+				return null;
+			}
 		}
 	}
 
@@ -385,8 +394,9 @@ public class CSVFormatter<T> {
 		if (object instanceof Map) {
 			((Map) object).put(field, value);
 		} else {
-			Method method = ReflectionUtil.setterMethod(field, valueClass, object.getClass());
-			method.invoke(object, value);
+			Method method = ReflectionUtil.setterMethod(field, valueClass, object.getClass(), true);
+			Object invocationTarget = ReflectionUtil.getInvocationTarget(field, object, true);
+			method.invoke(invocationTarget, value);
 		}
 	}
 	
