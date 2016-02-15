@@ -71,10 +71,11 @@ public abstract class AbstractFilter<T> implements AttributeFilter<T> {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getMatchDescription());
 		if (isExcluded()) {
-			sb.append(" [exclusion]");
-		} else if (isRequired()) {
-			sb.append(" [requirement]");
+			sb.append(" [excluded]");
 		} else {
+			if (isRequired()) {
+				sb.append(" [required]");
+			}
 			sb.append(" [weight of ");
 			sb.append(NumberFormat.getNumberInstance().format(getWeight().getWeight()));
 			sb.append("]");

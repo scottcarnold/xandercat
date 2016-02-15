@@ -4,12 +4,13 @@
 #   dualMotor (Boolean), rearFacingSeats (Boolean), coldWeatherPackage (Boolean), 
 #   soundStudio (Boolean), superchargerEnabled (Boolean), smartAirSuspension (Boolean), 
 #   dualChargers (Boolean), color (String), roof (String), wheels (String), 
-#   interior (String), year (Integer), miles (Integer), price (Integer)
+#   interior (String), year (Integer), miles (Integer), price (Integer), dateAdded (Date)
 #
 # Valid values for matchType are:
-#   * String:  STARTS_WITH, ENDS_WITH, EQUALS, CONTAINS 
+#   * String:   STARTS_WITH, ENDS_WITH, EQUALS, CONTAINS 
 #   * Integer:  LESS_THAN, GREATER_THAN, EQUALS
 #   * Boolean:  EQUALS
+#   * Date:     BEFORE, AFTER, EQUALS
 #
 # Valid values for weight are: 
 #   required, excluded, low, medium, high, maximum, [floating point number between 0 and 1] 
@@ -18,6 +19,7 @@
 #  * String:  any string, can be wrapped in quotes (value will be case insensitive)
 #  * Integer:  a whole number
 #  * Boolean:  true, false
+#  * Date:     MM/dd/yyyy (alternate formats supported by setting type as Date(<format>) )
 
 
 threshold,       0.75
@@ -34,3 +36,4 @@ wheels,          String,  STARTS_WITH, 21
 price,           Integer, LESS_THAN,   80000,    required
 price,           Integer, LESS_THAN,   70000
 miles,           Integer, LESS_THAN,   40000,    required
+dateAdded,       Date,    AFTER,       1/1/2016, required

@@ -26,12 +26,15 @@ public class ScoredCandidate<T extends Candidate> implements Comparable<ScoredCa
 	public T getCandidate() {
 		return candidate;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compareTo(ScoredCandidate<T> sc) {
 		if (score > sc.score) {
 			return -1;
 		} else if (score < sc.score) {
 			return 1;
+		} else if (candidate instanceof Comparable) {
+			return ((Comparable<T>) candidate).compareTo(sc.getCandidate());
 		} else {
 			return 0;
 		}

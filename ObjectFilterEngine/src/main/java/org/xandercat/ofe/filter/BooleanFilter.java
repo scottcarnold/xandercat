@@ -7,9 +7,9 @@ package org.xandercat.ofe.filter;
  */
 public class BooleanFilter extends AbstractFilter<Boolean> {
 
-	private boolean matchValue;
+	private Boolean matchValue;
 	
-	public BooleanFilter(boolean matchValue) {
+	public BooleanFilter(Boolean matchValue) {
 		this.matchValue = matchValue;
 	}
 	
@@ -20,11 +20,14 @@ public class BooleanFilter extends AbstractFilter<Boolean> {
 
 	@Override
 	public boolean isMatch(Boolean item) {
-		return item != null && item.booleanValue() == matchValue;
+		if (item == null || matchValue == null) {
+			return (item == null && matchValue == null);
+		}
+		return item.booleanValue() == matchValue;
 	}
 
 	@Override
 	public String getMatchDescription() {
-		return "is " + matchValue;
+		return "is " + ((matchValue == null)? "null" : matchValue);
 	}
 }

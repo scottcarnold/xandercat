@@ -7,21 +7,16 @@ package org.xandercat.ofe.filter;
  */
 public class StringFilter extends AbstractFilter<String> {
 
-	public static enum MatchStyle { CONTAINS, STARTS_WITH, ENDS_WITH, EQUALS }
-	
-	public static final MatchStyle CONTAINS = MatchStyle.CONTAINS;
-	public static final MatchStyle STARTS_WITH = MatchStyle.STARTS_WITH;
-	public static final MatchStyle ENDS_WITH = MatchStyle.ENDS_WITH;
-	public static final MatchStyle EQUALS = MatchStyle.EQUALS;
-	
 	private String matchString;
 	private String matchStringLowerCase;
-	private MatchStyle matchStyle;
+	private StringMatchStyle matchStyle;
 	private boolean caseSensitive;
 	
-	public StringFilter(MatchStyle matchStyle, String matchString) {
+	public StringFilter(StringMatchStyle matchStyle, String matchString) {
 		this.matchString = matchString;
-		this.matchStringLowerCase = matchString.toLowerCase();
+		if (matchString != null) {
+			this.matchStringLowerCase = matchString.toLowerCase();
+		}
 		this.matchStyle = matchStyle;
 	}
 	
@@ -40,16 +35,16 @@ public class StringFilter extends AbstractFilter<String> {
 
 	@Override
 	public boolean isMatch(String item) {
-		if (item == null) {
-			return false;
+		if (item == null || matchString == null) {
+			return (item == null && matchString == null);
 		}
 		String testString = (caseSensitive)? item : item.toLowerCase();
 		String matchString = (caseSensitive)? this.matchString : this.matchStringLowerCase;
-		if (matchStyle == MatchStyle.CONTAINS) {
+		if (matchStyle == StringMatchStyle.CONTAINS) {
 			return testString.contains(matchString);
-		} else if (matchStyle == MatchStyle.STARTS_WITH) {
+		} else if (matchStyle == StringMatchStyle.STARTS_WITH) {
 			return testString.startsWith(matchString);
-		} else if (matchStyle == MatchStyle.ENDS_WITH) {
+		} else if (matchStyle == StringMatchStyle.ENDS_WITH) {
 			return testString.endsWith(matchString);
 		} else {
 			return testString.equals(matchString);
@@ -58,6 +53,6 @@ public class StringFilter extends AbstractFilter<String> {
 
 	@Override
 	public String getMatchDescription() {
-		return matchStyle.name() + " \"" + matchString + "\"" + (caseSensitive? " (case sensitive)" : "");
+		return matchStyle.name() + ((matchString == null)? " null" : " \"" + matchString + "\"" + (caseSensitive? " (case sensitive)" : ""));
 	}
 }
