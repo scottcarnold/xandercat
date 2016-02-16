@@ -21,7 +21,7 @@ import org.xandercat.ofe.searchutility.ResultDestination;
  * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> candidate class
  */
 public abstract class TextMessageResultDestination<T extends Candidate> implements ResultDestination<T> {
 

@@ -10,9 +10,11 @@ import org.xandercat.ofe.searchutility.CandidateSource;
 /**
  * CandidateSource that reads objects from an HTML document using the JSoup API.
  * 
+ * This class forces the separation of document creation from document parsing.
+ * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> candidate class
  */
 public abstract class JSoupCandidateSource<T extends Candidate> implements CandidateSource<T> {
 

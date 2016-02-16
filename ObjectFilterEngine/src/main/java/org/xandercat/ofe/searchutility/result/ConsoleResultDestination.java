@@ -7,7 +7,7 @@ import org.xandercat.ofe.Candidate;
  * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> candidate class
  */
 public class ConsoleResultDestination<T extends Candidate> extends TextMessageResultDestination<T> {
 

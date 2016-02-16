@@ -28,9 +28,11 @@ import org.xandercat.ofe.Candidate;
  *     <li>mail.username</li>
  *     <li>mail.password</li></ul>
  * 
+ * A property mail.subject can also be specified; if not specified, email subject will be set to the report title.
+ * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> candidate class
  */
 public class MailResultDestination<T extends Candidate> extends TextMessageResultDestination<T> {
 

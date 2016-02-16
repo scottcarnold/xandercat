@@ -87,7 +87,7 @@ public class SearchUtility<T extends Candidate> {
 	 * 
 	 * @param properties  search utility properties
 	 * 
-	 * @throws Exception
+	 * @throws Exception if interfaces cannot be set up
 	 */
 	public SearchUtility(Properties properties) throws Exception {
 		this(properties, null);
@@ -100,7 +100,7 @@ public class SearchUtility<T extends Candidate> {
 	 * @param properties      search utility properties
 	 * @param candidateClass  the candidate class
 	 * 
-	 * @throws Exception
+	 * @throws Exception if interfaces cannot be set up
 	 */
 	@SuppressWarnings("unchecked")
 	public SearchUtility(Properties properties, Class<T> candidateClass) throws Exception {
@@ -126,6 +126,11 @@ public class SearchUtility<T extends Candidate> {
 		this.resultDestination.initialize(getTrimmedProperties(RESULT_DESTINATION_PROPERTY_PREFIX, properties), this.candidateClass);
 	}
 	
+	/**
+	 * Launch the search, pulling filters from the filter source, candidates from the candidate source, feeding
+	 * scored candidates and changes from the last search to the result destination, and saving the scored
+	 * candidates to disk for recall on any subsequent run.
+	 */
 	public void searchAndNotify() {
 		try {
 			File scoredCandidatesFile = new File(properties.getProperty("previous.results.file", DEFAULT_PREVIOUS_RESULTS_FILE_NAME));

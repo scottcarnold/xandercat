@@ -24,7 +24,7 @@ public class ReflectionUtil {
 	 * 
 	 * @return  getter method
 	 * 
-	 * @throws NoSuchMethodException
+	 * @throws NoSuchMethodException if method not found
 	 */
 	public static Method getterMethod(String fieldName, Class<?> clazz, boolean allowNested) throws NoSuchMethodException {
 		return getterMethod(fieldName, null, clazz, allowNested);
@@ -43,7 +43,7 @@ public class ReflectionUtil {
 	 * 
 	 * @return  getter method
 	 * 
-	 * @throws NoSuchMethodException
+	 * @throws NoSuchMethodException if method not found
 	 */
 	public static Method getterMethod(String fieldName, Class<?> fieldType, Class<?> clazz, boolean allowNested) throws NoSuchMethodException {
 		String remainingPath = null;
@@ -88,7 +88,7 @@ public class ReflectionUtil {
 	 * 
 	 * @return    setter method
 	 * 
-	 * @throws NoSuchMethodException
+	 * @throws NoSuchMethodException if method not found
 	 */
 	public static Method setterMethod(String fieldName, Class<?> fieldType, Class<?> clazz, boolean allowNested) throws NoSuchMethodException {
 		if (allowNested) {
@@ -109,16 +109,16 @@ public class ReflectionUtil {
 	 * For example, fieldPath might be "address.zipCode" for a User class, in which case the invocation target
 	 * will be the Address object of User.
 	 * 
-	 * @param fieldPath
-	 * @param object
+	 * @param fieldPath               field path (e.g. "user.address.zipCode")
+	 * @param object                  top level object
 	 * @param instantiateNullObjects  if true, nested objects will be constructed from default constructor if null; however, top level object cannot be null
 	 * 
-	 * @return
+	 * @return                        object at the tail of the field path
 	 * 
-	 * @throws NullPointerException   if any object in the nested path leading up the the final field is null.
+	 * @throws NullPointerException   if any object in the nested path leading up the the final field is null and could not be instantiated.
 	 * @throws NoSuchMethodException  if any part of the path is invalid
-	 * @throws InvocationTargetException
-	 * @Throws IllegalAccessException
+	 * @throws InvocationTargetException if reflection failure
+	 * @throws IllegalAccessException    if reflection failure
 	 */
 	public static Object getInvocationTarget(String fieldPath, Object object, boolean instantiateNullObjects) 
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

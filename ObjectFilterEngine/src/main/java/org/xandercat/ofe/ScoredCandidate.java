@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> candidate class
  */
 public class ScoredCandidate<T extends Candidate> implements Comparable<ScoredCandidate<T>>, Serializable {
 

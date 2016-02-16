@@ -7,7 +7,7 @@ import java.text.NumberFormat;
  * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> filtered type (must extend Number)
  */
 public abstract class AbstractNumericFilter<T extends Number> extends AbstractFilter<T> {
 

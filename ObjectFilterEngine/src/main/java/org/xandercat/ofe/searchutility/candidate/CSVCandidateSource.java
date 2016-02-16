@@ -27,7 +27,7 @@ import org.xandercat.ofe.searchutility.CandidateSource;
  * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> candidate class
  */
 public class CSVCandidateSource<T extends Candidate> implements CandidateSource<T> {
 

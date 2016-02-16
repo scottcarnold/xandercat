@@ -177,8 +177,9 @@ public class CSVFormatter<T> {
 	/**
 	 * Add a value formatter for parsing and formatting individual values of the given class type.
 	 * 
-	 * @param clazz   class type
+	 * @param clazz             class type
 	 * @param valueFormatter    formatter for class type
+	 * @param <S>               class type
 	 */
 	public <S> void addValueFormatter(Class<S> clazz, ValueFormatter<S> valueFormatter) {
 		valueFormatters.put(clazz, valueFormatter);
@@ -225,7 +226,7 @@ public class CSVFormatter<T> {
 	 * Sets fields for which you want the formatted output to be wrapped in such a way that Microsoft Excel will 
 	 * treat the fields as text regardless of their content.
 	 * 
-	 * @param fields
+	 * @param fields   set of fields to wrap so that Microsoft Excel will treat the fields as strings regardless of their content
 	 */
 	public void setForceAsStringFields(Set<String> fields) {
 		this.forceAsStringFields = fields;
@@ -248,7 +249,7 @@ public class CSVFormatter<T> {
 	 * 
 	 * @return          CSV string representing the object (for defined fields only)
 	 * 
-	 * @throws Exception
+	 * @throws Exception if object cannot be formated
 	 */
 	public String format(T object) throws Exception {
 		StringBuilder sb = new StringBuilder();

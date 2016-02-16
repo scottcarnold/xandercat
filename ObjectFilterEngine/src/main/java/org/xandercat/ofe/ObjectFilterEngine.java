@@ -46,8 +46,9 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 * Add a filter for the given field.  The field name must match a getter method within
 	 * the filtered class type.
 	 * 
-	 * @param field
-	 * @param attributeFilter
+	 * @param field              the field the filter should be applied to
+	 * @param attributeFilter    the filter
+	 * @param <S>                class type the filter applies to
 	 */
 	public <S> void addFilter(String field, AttributeFilter<S> attributeFilter) {
 		@SuppressWarnings("unchecked")
@@ -65,9 +66,9 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 * 
 	 * @param item                       the object to run against the filters
 	 * 
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException     if reflection failure
+	 * @throws InvocationTargetException if reflection failure
+	 * @throws IllegalAccessException    if reflection failure
 	 */
 	public void addCandidate(T item) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 		float combinedWeight = 0f;
@@ -105,9 +106,9 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 * 
 	 * @param items                        the objects to run against the filters
 	 * 
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException     if reflection failure
+	 * @throws InvocationTargetException if reflection failure
+	 * @throws IllegalAccessException    if reflection failure
 	 */
 	@SuppressWarnings("unchecked")
 	public void addCandidates(T... items) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -122,9 +123,9 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 * 
 	 * @param items                        the objects to run against the filters
 	 * 
-	 * @throws NoSuchMethodException
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException     if reflection failure
+	 * @throws InvocationTargetException if reflection failure
+	 * @throws IllegalAccessException    if reflection failure
 	 */
 	public void addCandidates(Collection<T> items) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 		for (T item : items) {
@@ -181,9 +182,4 @@ public class ObjectFilterEngine<T extends Candidate> {
 		Collections.sort(differences);
 		return differences;
 	}
-	
-//	private String getterName(String fieldName, Class<?> filteredClass) {
-//		String prefix = (filteredClass == Boolean.TYPE)? "is" : "get";
-//		return prefix + fieldName.substring(0,  1).toUpperCase() + fieldName.substring(1);
-//	}
 }

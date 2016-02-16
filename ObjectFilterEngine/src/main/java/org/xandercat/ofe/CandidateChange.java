@@ -5,7 +5,7 @@ package org.xandercat.ofe;
  * 
  * @author Scott Arnold
  *
- * @param <T>
+ * @param <T> Candidate class
  */
 public class CandidateChange<T extends Candidate> implements Comparable<CandidateChange<T>> {
 

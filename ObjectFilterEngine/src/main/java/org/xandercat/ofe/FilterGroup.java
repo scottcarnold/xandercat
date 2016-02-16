@@ -40,6 +40,15 @@ public class FilterGroup<T> {
 		return filters;
 	}
 	
+	/**
+	 * Returns whether or not the candidate should continue to be considered a candidate
+	 * based on the value of the field for the filter group.  This is used to enforce
+	 * excluded and required rules.
+	 * 
+	 * @param value   the value to consider for the field
+	 * 
+	 * @return    whether or not the candidate with given value should remain a valid candidate for the final results
+	 */
 	public boolean isCandidate(Object value) {
 		@SuppressWarnings("unchecked")
 		T item = (T) value;
@@ -60,6 +69,15 @@ public class FilterGroup<T> {
 		return !requiredFilterExists || (requiredFilterExists && requiredFilterMatched);
 	}
 
+	/**
+	 * Returns the weight that should be used for this field for the given value.  This will
+	 * return the highest weight out of those filters for the field that match for the 
+	 * given value.
+	 * 
+	 * @param value    the value to get weight for
+	 * 
+	 * @return         weight to use for the field for the given value.
+	 */
 	public FilterWeight getCandidateWeight(Object value) {
 		FilterWeight weight = null;
 		@SuppressWarnings("unchecked")
@@ -74,6 +92,11 @@ public class FilterGroup<T> {
 		return (weight == null)? FilterWeight.NONE : weight;
 	}
 	
+	/**
+	 * Returns the maximum weight possible out of all filters for the field.
+	 * 
+	 * @return    maximum weight possible for the field
+	 */
 	public FilterWeight getCandidateMaxWeight() {
 		FilterWeight maxWeight = new FilterWeight(0);
 		for (AttributeFilter<T> filter : filters) {

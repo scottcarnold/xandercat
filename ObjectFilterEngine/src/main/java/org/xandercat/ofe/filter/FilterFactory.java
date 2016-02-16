@@ -116,10 +116,11 @@ public class FilterFactory {
 	 * @param matchType    the match type (e.g., for String, might be "CONTAINS", "EQUALS", etc)
 	 * @param matchValue   the base value to match against in String format
 	 * @param attributes   can be "required", "excluded", and/or a weight; weight can be keyword or number from 0 to 1.
+	 * @param <T>          class type filter will filter upon
 	 * 
 	 * @return             attribute filter based on the provided filter attributes
 	 * 
-	 * @throws Exception
+	 * @throws Exception   if filter cannot be created
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> AttributeFilter<T> getFilter(String fieldType, 

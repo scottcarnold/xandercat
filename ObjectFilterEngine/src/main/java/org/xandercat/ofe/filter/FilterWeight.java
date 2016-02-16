@@ -3,6 +3,12 @@ package org.xandercat.ofe.filter;
 import java.io.Serializable;
 import java.text.NumberFormat;
 
+/**
+ * Class to represent how much weight or significance a filter for the object filter engine has.
+ * Weights are represented by float values and constrained to be between 0 and 1 inclusive.
+ * 
+ * @author Scott Arnold
+ */
 public class FilterWeight implements Comparable<FilterWeight>, Serializable {
 
 	private static final long serialVersionUID = 1L;
