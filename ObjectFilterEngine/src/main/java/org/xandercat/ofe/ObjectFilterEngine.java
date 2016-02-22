@@ -8,34 +8,50 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.xandercat.ofe.filter.AttributeFilter;
 
 /**
  * Filtering engine for running a collection of objects against a set of filters and returning
- * a collection of matches that exceed some set match threshold.  The filtering engine can also 
- * provide a listing of filtered collection changes or differences, useful for tracking changes
- * to the matches over time.
+ * a collection of matches that exceed some set match threshold and/or limited by a set maximum
+ * number of results.  The filtering engine can also provide a listing of filtered collection 
+ * changes or differences, useful for tracking changes to the matches over time.
  *  
  * @author Scott Arnold
  *
- * @param <T>   the type of object to be filtered; must implement Candidate and be Serializable
+ * @param <T>   the type of object to be filtered; must implement Candidate
  */
 public class ObjectFilterEngine<T extends Candidate> {
 
 	private Map<String, FilterGroup<?>> filterGroups = new HashMap<String, FilterGroup<?>>();
-	private List<ScoredCandidate<T>> scoredCandidates = new ArrayList<ScoredCandidate<T>>();
-	private float scoreThreshold = 0.5f;
+	private SortedSet<ScoredCandidate<T>> scoredCandidates = new TreeSet<ScoredCandidate<T>>();
+	private Float scoreThreshold = Float.valueOf(0.5f);
+	private Integer maxResults = null;
 	
 	public ObjectFilterEngine() {
 	}
 	
 	public ObjectFilterEngine(float scoreThreshold) {
-		this.scoreThreshold = scoreThreshold;
+		this(Float.valueOf(scoreThreshold), null);
 	}
 	
-	public float getScoreThreshold() {
-		return this.scoreThreshold;
+	public ObjectFilterEngine(int maxResults) {
+		this(null, Integer.valueOf(maxResults));
+	}
+	
+	public ObjectFilterEngine(Float scoreThreshold, Integer maxResults) {
+		this.scoreThreshold = scoreThreshold;
+		this.maxResults = maxResults;
+	}
+	
+	public Float getScoreThreshold() {
+		return scoreThreshold;
+	}
+	
+	public Integer getMaxResults() {
+		return maxResults;
 	}
 	
 	public Collection<FilterGroup<?>> getFilterGroups() {
@@ -94,8 +110,11 @@ public class ObjectFilterEngine<T extends Candidate> {
 		}
 		if (combinedWeight > 0) {
 			float score = combinedWeight / maxCombinedWeight;
-			if (score >= this.scoreThreshold) {
+			if (this.scoreThreshold == null || score >= this.scoreThreshold.floatValue()) {
 				scoredCandidates.add(new ScoredCandidate<T>(score, item));
+			}
+			if (this.maxResults != null && scoredCandidates.size() > this.maxResults.intValue()) {
+				scoredCandidates.remove(scoredCandidates.last());
 			}
 		}
 	}
@@ -134,12 +153,11 @@ public class ObjectFilterEngine<T extends Candidate> {
 	}
 	
 	/**
-	 * Returns the list of candidates that matched the list of filters.
+	 * Returns the sorted set of candidates that matched the list of filters.
 	 * 
-	 * @return   list of candidates that matched the list of filters
+	 * @return   sorted set of candidates that matched the list of filters
 	 */
-	public List<ScoredCandidate<T>> getScoredCandidates() {
-		Collections.sort(scoredCandidates);
+	public SortedSet<ScoredCandidate<T>> getScoredCandidates() {
 		return scoredCandidates;
 	}
 	
@@ -151,7 +169,7 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 * 
 	 * @return    list of differences (additions, changes, removals) between the matched candidates.
 	 */
-	public List<CandidateChange<T>> getDifferences(List<ScoredCandidate<T>> previousScoredCandidates) {
+	public List<CandidateChange<T>> getDifferences(SortedSet<ScoredCandidate<T>> previousScoredCandidates) {
 		List<CandidateChange<T>> differences = new ArrayList<CandidateChange<T>>();
 		Map<String, ScoredCandidate<T>> currentCandidates = new HashMap<String, ScoredCandidate<T>>();
 		for (ScoredCandidate<T> scoredCandidate : scoredCandidates) {

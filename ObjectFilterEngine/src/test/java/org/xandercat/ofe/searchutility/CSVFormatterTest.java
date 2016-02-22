@@ -4,6 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CSVFormatterTest {
 
@@ -199,5 +201,22 @@ public class CSVFormatterTest {
 		assertEquals("string1,nestedstring1,12,true", csvString);
 		TestClassWithNesting tc2 = formatter.parse(csvString);
 		assertEquals(tc, tc2);
+	}
+	
+	@Test
+	public void testFormatAndParseWithMap() throws Exception {
+		CSVFormatter<Map<String, Object>> formatter = CSVFormatter.genericFormatter();
+		formatter.setFields(new String[] {"int1","integer1","string1"}, new Class[] {Integer.TYPE,Integer.class,String.class});
+		Map<String,Object> tc = new HashMap<String,Object>();
+		tc.put("int1", 1);  // should get autoboxed as Integer
+		tc.put("integer1", Integer.valueOf(2));
+		tc.put("string1", "maptest");
+		String csvString = formatter.format(tc);
+		assertEquals("1,2,maptest", csvString);
+		Map<String,Object> tc2 = formatter.parse(csvString);
+		assertEquals(3, tc2.size());
+		assertEquals(Integer.valueOf(1), tc2.get("int1"));
+		assertEquals(Integer.valueOf(2), tc2.get("integer1"));
+		assertEquals("maptest", tc2.get("string1"));
 	}
 }

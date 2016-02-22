@@ -36,7 +36,7 @@ public class ScoredCandidate<T extends Candidate> implements Comparable<ScoredCa
 		} else if (candidate instanceof Comparable) {
 			return ((Comparable<T>) candidate).compareTo(sc.getCandidate());
 		} else {
-			return 0;
+			return candidate.getUniqueId().compareTo(sc.getCandidate().getUniqueId());
 		}
 	}
 	@Override

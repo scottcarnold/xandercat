@@ -8,7 +8,7 @@ import org.xandercat.ofe.filter.StringMatchStyle;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
+import java.util.SortedSet;
 
 public class ObjectFilterEngineTest {
 
@@ -151,9 +151,9 @@ public class ObjectFilterEngineTest {
 		TestClass tc2 = new TestClass(Integer.valueOf(1), 2);
 		ofe.addCandidate(tc1);
 		ofe.addCandidate(tc2);
-		List<ScoredCandidate<TestClass>> scoredCandidates = ofe.getScoredCandidates();
+		SortedSet<ScoredCandidate<TestClass>> scoredCandidates = ofe.getScoredCandidates();
 		assertEquals(1, scoredCandidates.size());
-		assertEquals(6, scoredCandidates.get(0).getCandidate().getInt1());
+		assertEquals(6, scoredCandidates.first().getCandidate().getInt1());
 	}
 	
 	@Test
@@ -166,8 +166,8 @@ public class ObjectFilterEngineTest {
 		TestClass tc2 = new TestClass(Integer.valueOf(4), 8, new NestedTestClass("rx"));
 		ofe.addCandidate(tc1);
 		ofe.addCandidate(tc2);
-		List<ScoredCandidate<TestClass>> scoredCandidates = ofe.getScoredCandidates();
+		SortedSet<ScoredCandidate<TestClass>> scoredCandidates = ofe.getScoredCandidates();
 		assertEquals(1, scoredCandidates.size());
-		assertEquals(6, scoredCandidates.get(0).getCandidate().getInt1());
+		assertEquals(6, scoredCandidates.first().getCandidate().getInt1());
 	}
 }

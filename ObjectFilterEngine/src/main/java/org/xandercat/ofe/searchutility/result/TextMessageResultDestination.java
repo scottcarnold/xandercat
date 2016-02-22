@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.SortedSet;
 
 import org.apache.log4j.Logger;
 import org.xandercat.ofe.Candidate;
@@ -58,15 +59,21 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 	}
 
 	@Override
-	public void handleSearchResults(float threshold, Collection<FilterGroup<?>> filterGroups,
-			List<CandidateChange<T>> changes, List<ScoredCandidate<T>> scoredCandidates) {
+	public void handleSearchResults(Float threshold, Integer maxResults, Collection<FilterGroup<?>> filterGroups,
+			List<CandidateChange<T>> changes, SortedSet<ScoredCandidate<T>> scoredCandidates) {
 		if (!issueMessageOnlyWhenResultsChanged || changes.size() > 0) {
 			StringBuilder sb = new StringBuilder();
 			if (reportTitle != null) {
 				sb.append(reportTitle).append("\n");
 			}
-			sb.append("Threshold for match is set at ");
-			sb.append(NumberFormat.getPercentInstance().format(threshold)).append("\n\n");
+			if (threshold != null) {
+				sb.append("Threshold for match is set at ");
+				sb.append(NumberFormat.getPercentInstance().format(threshold)).append("\n");
+			}
+			if (maxResults !=  null) {
+				sb.append("Maximum number of results allowed is ").append(maxResults).append("\n");
+			}
+			sb.append("\n");
 			sb.append("Changes Since Last Report:\n\n");
 			if (changes.size() == 0) {
 				sb.append("There have been no changes since the last report.");

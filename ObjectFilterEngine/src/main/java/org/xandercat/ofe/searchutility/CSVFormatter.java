@@ -51,12 +51,12 @@ public class CSVFormatter<T> {
 	private boolean failOnTooManyValues;
 	
 	/**
-	 * Returns a generic formatter that will use a Map with String keys and String values.
+	 * Returns a generic formatter that will use a Map with String keys and Object values.
 	 * 
-	 * @return    generic formatter using a Map with String keys and String values.
+	 * @return    generic formatter using a Map with String keys and Object values.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static CSVFormatter<Map<String, String>> genericFormatter() {
+	public static CSVFormatter<Map<String, Object>> genericFormatter() {
 		return new CSVFormatter(Map.class);
 	}
 	
@@ -306,7 +306,7 @@ public class CSVFormatter<T> {
 	 */
 	public T parse(String csvString) throws Exception {
 		@SuppressWarnings("unchecked")
-		T instance = (clazz == Map.class)? (T) new LinkedHashMap<String, String>() : clazz.newInstance();
+		T instance = (clazz == Map.class)? (T) new LinkedHashMap<String, Object>() : clazz.newInstance();
 		List<Object> values = new ArrayList<Object>();
 		StringBuilder sb = new StringBuilder();
 		boolean inQuotes = false;

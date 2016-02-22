@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.SortedSet;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
@@ -134,7 +135,7 @@ public class SearchUtility<T extends Candidate> {
 	public void searchAndNotify() {
 		try {
 			File scoredCandidatesFile = new File(properties.getProperty("previous.results.file", DEFAULT_PREVIOUS_RESULTS_FILE_NAME));
-			ObjectFilterEngine<T> ofe = new ObjectFilterEngine<T>(filterSource.getMatchThreshold());
+			ObjectFilterEngine<T> ofe = new ObjectFilterEngine<T>(filterSource.getMatchThreshold(), filterSource.getMaxResults());
 			for (String fieldName : filterSource.getFilterFieldNames()) {
 				for (AttributeFilter<?> filter : filterSource.getFilters(fieldName)) {
 					ofe.addFilter(fieldName, filter);
@@ -142,12 +143,12 @@ public class SearchUtility<T extends Candidate> {
 			}
 			Collection<T> candidates = candidateSource.getCandidates();
 			ofe.addCandidates(candidates);
-			List<ScoredCandidate<T>> scoredCandidates = ofe.getScoredCandidates();
+			SortedSet<ScoredCandidate<T>> scoredCandidates = ofe.getScoredCandidates();
 			LOGGER.info("Candidates found: " + scoredCandidates.size() + " out of " + candidates.size() + " candidates.");
-			List<ScoredCandidate<T>> previousScoredCandidates = loadPreviousScoredCandidates(scoredCandidatesFile);
+			SortedSet<ScoredCandidate<T>> previousScoredCandidates = loadPreviousScoredCandidates(scoredCandidatesFile);
 			List<CandidateChange<T>> changes = ofe.getDifferences(previousScoredCandidates);
-			resultDestination.handleSearchResults(ofe.getScoreThreshold(), ofe.getFilterGroups(), 
-					changes, scoredCandidates);
+			resultDestination.handleSearchResults(ofe.getScoreThreshold(), ofe.getMaxResults(),
+					ofe.getFilterGroups(), changes, scoredCandidates);
 			saveScoredCandidates(scoredCandidatesFile, scoredCandidates);
 		} catch (Exception e) {
 			LOGGER.error("An error occurred while executing the search.", e);
@@ -156,11 +157,11 @@ public class SearchUtility<T extends Candidate> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private List<ScoredCandidate<T>> loadPreviousScoredCandidates(File previousScoredCandidatesFile) throws IOException, ClassNotFoundException {
-		List<ScoredCandidate<T>> previousScoredCandidates = null;
+	private SortedSet<ScoredCandidate<T>> loadPreviousScoredCandidates(File previousScoredCandidatesFile) throws IOException, ClassNotFoundException {
+		SortedSet<ScoredCandidate<T>> previousScoredCandidates = null;
 		if (previousScoredCandidatesFile.isFile()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(previousScoredCandidatesFile));
-			previousScoredCandidates = (List<ScoredCandidate<T>>) ois.readObject();
+			previousScoredCandidates = (SortedSet<ScoredCandidate<T>>) ois.readObject();
 			ois.close();
 		} else {
 			LOGGER.warn("No prior scored candidates found.");
@@ -168,7 +169,7 @@ public class SearchUtility<T extends Candidate> {
 		return previousScoredCandidates;
 	}
 	
-	private void saveScoredCandidates(File scoredCandidatesFile, List<ScoredCandidate<T>> scoredCandidates) throws IOException {
+	private void saveScoredCandidates(File scoredCandidatesFile, SortedSet<ScoredCandidate<T>> scoredCandidates) throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(scoredCandidatesFile));
 		oos.writeObject(scoredCandidates);
 		oos.close();

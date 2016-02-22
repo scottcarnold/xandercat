@@ -120,6 +120,28 @@ public class CSVCandidateSourceTest {
 	}
 	
 	@Test
+	public void testCSVCandidateSourceGenericWithFieldTypes() throws Exception {
+		CSVCandidateSource<MapCandidate> source = new CSVCandidateSource<MapCandidate>();
+		Properties properties = new Properties();
+		File csvFile = getTempFile(2);
+		properties.put("file", csvFile.getAbsolutePath());
+		properties.put("fields", "id,field1,field2,shortDescription,fullDescription");
+		properties.put("field.types", "Integer,String,String,String,java.lang.String");
+		source.initialize(properties, MapCandidate.class);
+		Collection<MapCandidate> candidates = source.getCandidates();
+		assertEquals(2, candidates.size());
+		MapCandidate[] mc = new MapCandidate[2];
+		mc = candidates.toArray(mc); 
+		assertEquals(Integer.valueOf(0), mc[0].get("id"));
+		assertEquals("this is a test", mc[0].get("field2"));
+		assertEquals("my short desc 0", mc[0].get("shortDescription"));
+		assertEquals(Integer.valueOf(1), mc[1].get("id"));
+		assertEquals("This is my full description 1", mc[1].get("fullDescription"));
+		assertEquals("0", mc[0].getUniqueId());
+		assertEquals("my short desc 1", mc[1].getShortDescription());
+	}
+	
+	@Test
 	public void testCSVCandidateSourceCustomClass() throws Exception {
 		CSVCandidateSource<TestClass> source = new CSVCandidateSource<TestClass>();
 		Properties properties = new Properties();

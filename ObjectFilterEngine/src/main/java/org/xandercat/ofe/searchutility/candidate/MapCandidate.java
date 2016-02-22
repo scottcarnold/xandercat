@@ -13,25 +13,25 @@ import org.xandercat.ofe.Candidate;
  * 
  * @author Scott Arnold
  */
-public class MapCandidate extends LinkedHashMap<String, String> implements Candidate, Serializable {
+public class MapCandidate extends LinkedHashMap<String, Object> implements Candidate, Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	@Override
 	public String getUniqueId() {
 		if (containsKey("uniqueId")) {
-			return get("uniqueId");
+			return get("uniqueId").toString();
 		} else if (containsKey("id")) {
-			return get("id");
+			return get("id").toString();
 		} else {
-			return entrySet().iterator().next().getValue(); 
+			return entrySet().iterator().next().getValue().toString(); 
 		}
 	}
 
 	@Override
 	public String getShortDescription() {
 		if (containsKey("shortDescription")) {
-			return get("shortDescription");
+			return get("shortDescription").toString();
 		} else {
 			return toString();
 		}
@@ -40,7 +40,7 @@ public class MapCandidate extends LinkedHashMap<String, String> implements Candi
 	@Override
 	public String getFullDescription() {
 		if (containsKey("fullDescription")) {
-			return get("fullDescription");
+			return get("fullDescription").toString();
 		} else {
 			return toString();
 		}

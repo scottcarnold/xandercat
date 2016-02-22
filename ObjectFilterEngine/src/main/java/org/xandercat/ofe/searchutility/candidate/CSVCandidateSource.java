@@ -23,7 +23,10 @@ import org.xandercat.ofe.searchutility.CandidateSource;
  * the "date.format" key.
  * 
  * The candidate class type is expected to be under the properties key "candidate.class";
- * otherwise it will assume you want the generic MapCandidate class.
+ * otherwise it will assume you want the generic MapCandidate class.  When using the
+ * MapCandidate class, the field types can be specified through a CSV list of class
+ * names under property key "field.types"; if the class name is not fully qualified,
+ * it will be assumed from package java.lang.
  * 
  * @author Scott Arnold
  *
@@ -56,7 +59,25 @@ public class CSVCandidateSource<T extends Candidate> implements CandidateSource<
 			});
 		}
 		String[] fields = properties.getProperty("fields").split(",");
-		formatter.setFields(fields);
+		for (int i=0; i<fields.length; i++) {
+			fields[i] = fields[i].trim();
+		}
+		Class[] fieldTypes = null;
+		String fieldTypesCSVString = properties.getProperty("field.types");
+		
+		if (fieldTypesCSVString != null) {
+			String[] fieldTypeStrings = fieldTypesCSVString.split(",");
+			fieldTypes = new Class[fieldTypeStrings.length];
+			for (int i=0 ;i<fieldTypeStrings.length; i++) {
+				String className = fieldTypeStrings[i].contains(".")? fieldTypeStrings[i].trim() : "java.lang." + fieldTypeStrings[i].trim();
+				fieldTypes[i] = Class.forName(className);
+			}
+		}
+		if (fieldTypes == null) {
+			formatter.setFields(fields);
+		} else {
+			formatter.setFields(fields, fieldTypes);
+		}
 	}
 
 	@Override
