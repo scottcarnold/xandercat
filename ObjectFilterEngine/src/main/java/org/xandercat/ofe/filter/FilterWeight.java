@@ -6,21 +6,21 @@ import java.text.NumberFormat;
 /**
  * Class to represent how much weight or significance a filter for the object filter engine has.
  * Weights are represented by float values and constrained to be between 0 and 1 inclusive.
+ * Filter weights are immutable.
  * 
  * @author Scott Arnold
  */
 public class FilterWeight implements Comparable<FilterWeight>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	
-	public static final FilterWeight MAXIMUM = new FilterWeight(1f, true);
-	public static final FilterWeight HIGH = new FilterWeight(0.75f, true);
-	public static final FilterWeight MEDIUM = new FilterWeight(0.5f, true);
-	public static final FilterWeight LOW = new FilterWeight(0.25f, true);
-	public static final FilterWeight NONE = new FilterWeight(0f, true);
+	public static final FilterWeight MAXIMUM = new FilterWeight(1f);
+	public static final FilterWeight HIGH = new FilterWeight(0.75f);
+	public static final FilterWeight MEDIUM = new FilterWeight(0.5f);
+	public static final FilterWeight LOW = new FilterWeight(0.25f);
+	public static final FilterWeight NONE = new FilterWeight(0f);
 	
 	private float weight;
-	private boolean unmodifiable;
 	
 	public FilterWeight(float weight) {
 		if (weight < 0 || weight > 1) {
@@ -29,39 +29,10 @@ public class FilterWeight implements Comparable<FilterWeight>, Serializable {
 		this.weight = weight;
 	}
 	
-	public FilterWeight(float weight, boolean unmodifiable) {
-		this(weight);
-		this.unmodifiable = unmodifiable;
-	}
-	
 	public float getWeight() {
 		return weight;
 	}
 	
-	public void setWeight(float weight) {
-		if (weight < 0 || weight > 1) {
-			throw new IllegalArgumentException("Weight must be between 0 and 1 inclusive.");
-		}
-		if (unmodifiable) {
-			throw new UnsupportedOperationException("Unmodifiable.");
-		}
-		this.weight = weight;
-	}
-	
-	public void increaseWeight(float weight) {
-		if (weight < 0 || weight > 1) {
-			throw new IllegalArgumentException("Weight must be between 0 and 1 inclusive.");
-		}
-		if (unmodifiable) {
-			throw new UnsupportedOperationException("Unmodifiable.");
-		}
-		this.weight += (1f - this.weight) * weight;
-	}
-	
-	public void increaseWeight(FilterWeight weight) {
-		increaseWeight(weight.getWeight());
-	}
-
 	@Override
 	public int compareTo(FilterWeight o) {
 		if (weight < o.weight) {
