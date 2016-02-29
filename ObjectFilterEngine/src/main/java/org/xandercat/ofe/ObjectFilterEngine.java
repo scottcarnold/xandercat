@@ -12,6 +12,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.xandercat.ofe.filter.AttributeFilter;
+import org.xandercat.ofe.stat.StatCollector;
 
 /**
  * Filtering engine for running a collection of objects against a set of filters and returning
@@ -26,6 +27,7 @@ import org.xandercat.ofe.filter.AttributeFilter;
 public class ObjectFilterEngine<T extends Candidate> {
 
 	private Map<String, FilterGroup<?>> filterGroups = new HashMap<String, FilterGroup<?>>();
+	private Map<String, StatCollectorGroup<?>> statCollectorGroups = new HashMap<String, StatCollectorGroup<?>>();
 	private SortedSet<ScoredCandidate<T>> scoredCandidates = new TreeSet<ScoredCandidate<T>>();
 	private Float scoreThreshold = Float.valueOf(0.5f);
 	private Integer maxResults = null;
@@ -58,6 +60,10 @@ public class ObjectFilterEngine<T extends Candidate> {
 		return filterGroups.values();
 	}
 	
+	public Collection<StatCollectorGroup<?>> getStatCollectorGroups() {
+		return statCollectorGroups.values();
+	}
+	
 	/**
 	 * Add a filter for the given field.  The field name must match a getter method within
 	 * the filtered class type.
@@ -76,6 +82,28 @@ public class ObjectFilterEngine<T extends Candidate> {
 		aggFilter.addFilter(attributeFilter);
 	}
 	
+	public <S> void addStatCollector(String field, StatCollector<S, ?> statCollector) {
+		@SuppressWarnings("unchecked")
+		StatCollectorGroup<S> group = (StatCollectorGroup<S>) statCollectorGroups.get(field);
+		if (group == null) {
+			group = new StatCollectorGroup<S>(field, statCollector.getStatCollectedClass());
+			statCollectorGroups.put(field, group);
+		}
+		group.addStatCollector(statCollector);
+	}
+	
+	private Object getCandidateFieldValue(String field, Class<?> fieldClass, Object candidate) 
+			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+		Method getterMethod = ReflectionUtil.getterMethod(field, fieldClass, candidate.getClass(), true);
+		try {
+			Object invocationTarget = ReflectionUtil.getInvocationTarget(field, candidate, false);
+			return getterMethod.invoke(invocationTarget, (Object[]) null);
+		} catch (NullPointerException npe) {
+			// this means a nested object on a complex path was null; in this case, just treat as a null value
+		}		
+		return null;
+	}
+	
 	/**
 	 * Run a potential candidate against the list of filters.  Make sure all filters have been added before
 	 * calling this method.
@@ -87,23 +115,21 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 * @throws IllegalAccessException    if reflection failure
 	 */
 	public void addCandidate(T item) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+		for (Map.Entry<String, StatCollectorGroup<?>> entry : statCollectorGroups.entrySet()) {
+			String field = entry.getKey();
+			StatCollectorGroup<?> statCollectorGroup = entry.getValue();
+			Object value = getCandidateFieldValue(field, statCollectorGroup.getStatCollectedClass(), item);
+			statCollectorGroup.collectStatistics(value);
+		}
 		float combinedWeight = 0f;
 		float maxCombinedWeight = 0f;
 		for (Map.Entry<String, FilterGroup<?>> entry : filterGroups.entrySet()) {
 			String field = entry.getKey();
-			FilterGroup<?> filter = entry.getValue();
-			maxCombinedWeight += filter.getCandidateMaxWeight().getWeight();
-			Method getterMethod = ReflectionUtil.getterMethod(field, filter.getFilteredClass(), item.getClass(), true);
-			Object value = null;
-			try {
-				Object invocationTarget = ReflectionUtil.getInvocationTarget(field, item, false);
-				value = getterMethod.invoke(invocationTarget, (Object[]) null);
-			} catch (NullPointerException npe) {
-				// this means a nested object on a complex path was null; in this case, just treat as a null value
-				value = null;
-			} 
-			if (filter.isCandidate(value)) {
-				combinedWeight += filter.getCandidateWeight(value).getWeight();
+			FilterGroup<?> filterGroup = entry.getValue();
+			maxCombinedWeight += filterGroup.getCandidateMaxWeight().getWeight();
+			Object value = getCandidateFieldValue(field, filterGroup.getFilteredClass(), item);
+			if (filterGroup.isCandidate(value)) {
+				combinedWeight += filterGroup.getCandidateWeight(value).getWeight();
 			} else {
 				return;  // reject due to exclude match or required without match
 			}
@@ -159,6 +185,12 @@ public class ObjectFilterEngine<T extends Candidate> {
 	 */
 	public SortedSet<ScoredCandidate<T>> getScoredCandidates() {
 		return scoredCandidates;
+	}
+	
+	public void computeStatistics() {
+		for (StatCollectorGroup<?> statCollectorGroup : statCollectorGroups.values()) {
+			statCollectorGroup.compute();
+		}
 	}
 	
 	/**

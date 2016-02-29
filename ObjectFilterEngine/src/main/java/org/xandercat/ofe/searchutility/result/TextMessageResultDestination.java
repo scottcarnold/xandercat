@@ -11,8 +11,11 @@ import org.xandercat.ofe.Candidate;
 import org.xandercat.ofe.CandidateChange;
 import org.xandercat.ofe.FilterGroup;
 import org.xandercat.ofe.ScoredCandidate;
+import org.xandercat.ofe.StatCollectorGroup;
 import org.xandercat.ofe.filter.AttributeFilter;
 import org.xandercat.ofe.searchutility.ResultDestination;
+import org.xandercat.ofe.stat.DataPoint;
+import org.xandercat.ofe.stat.StatCollector;
 
 /**
  * Abstract ResultDestination that sends search results as a text message.
@@ -58,8 +61,21 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 		this.issueMessageOnlyWhenResultsChanged = issueMessageOnlyWhenResultsChanged;
 	}
 
+	private <U> void formatStatistics(String fieldName, StatCollector<T, U> statCollector, StringBuilder sb) {
+		sb.append(statCollector.getDescription()).append(" -- ").append(fieldName).append("\n");
+		List<DataPoint<U>> dataPoints = statCollector.getStatistics();
+		if (dataPoints.size() == 0) {
+			sb.append("\n\tNo Data");
+		} 
+		for (DataPoint<U> dataPoint : dataPoints) {
+			sb.append("\t").append(statCollector.formatStatistic(dataPoint)).append("\n");
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void handleSearchResults(Float threshold, Integer maxResults, Collection<FilterGroup<?>> filterGroups,
+	public void handleSearchResults(Float threshold, Integer maxResults, 
+			Collection<FilterGroup<?>> filterGroups, Collection<StatCollectorGroup<?>> statCollectorGroups,
 			List<CandidateChange<T>> changes, SortedSet<ScoredCandidate<T>> scoredCandidates) {
 		if (!issueMessageOnlyWhenResultsChanged || changes.size() > 0) {
 			StringBuilder sb = new StringBuilder();
@@ -114,7 +130,16 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 					sb.append(fieldName).append(" ").append(filter.getDescription()).append("\n");
 				}
 			}
-			LOGGER.info("Search results have changed; sending notification.");
+			if (statCollectorGroups != null && statCollectorGroups.size() > 0) {
+				sb.append("\n\nStatistics:\n\n");
+				for (StatCollectorGroup<?> statCollectorGroup : statCollectorGroups) {
+					String fieldName = statCollectorGroup.getFieldName();
+					for (StatCollector<?, ?> statCollector : statCollectorGroup.getStatCollectors()) {
+						formatStatistics(fieldName, (StatCollector<T, ?>) statCollector, sb);
+					}
+				}
+			}
+			LOGGER.info("Sending search result notification.");
 			handleTextMessage(sb.toString());
 		} else {
 			LOGGER.info("Search results have not changed; no notification was sent.");

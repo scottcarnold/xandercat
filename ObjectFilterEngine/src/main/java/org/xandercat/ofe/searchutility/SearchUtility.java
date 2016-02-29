@@ -21,6 +21,7 @@ import org.xandercat.ofe.ObjectFilterEngine;
 import org.xandercat.ofe.ScoredCandidate;
 import org.xandercat.ofe.filter.AttributeFilter;
 import org.xandercat.ofe.searchutility.candidate.MapCandidate;
+import org.xandercat.ofe.stat.StatCollector;
 
 /**
  * Generic search utility for running a collection of objects against an object filtering engine
@@ -34,6 +35,7 @@ public class SearchUtility<T extends Candidate> {
 
 	public static final String FILTER_SOURCE_PROPERTY_PREFIX = "filter.source.";
 	public static final String CANDIDATE_SOURCE_PROPERTY_PREFIX = "candidate.source.";
+	public static final String STAT_COLLECTOR_SOURCE_PROPERTY_PREFIX = "stat.collector.source.";
 	public static final String RESULT_DESTINATION_PROPERTY_PREFIX = "result.destination.";
 	
 	private static final Logger LOGGER = Logger.getLogger(SearchUtility.class);
@@ -44,6 +46,7 @@ public class SearchUtility<T extends Candidate> {
 	private Class<T> candidateClass;
 	private FilterSource filterSource;
 	private CandidateSource<T> candidateSource;
+	private StatCollectorSource statCollectorSource;
 	private ResultDestination<T> resultDestination;
 	
 	public static void main(String[] args) {
@@ -118,12 +121,19 @@ public class SearchUtility<T extends Candidate> {
 		}
 		String filterSourceClassName = properties.getProperty(FILTER_SOURCE_PROPERTY_PREFIX + "class");
 		String candidateSourceClassName = properties.getProperty(CANDIDATE_SOURCE_PROPERTY_PREFIX + "class");
+		String statCollectorSourceClassName = properties.getProperty(STAT_COLLECTOR_SOURCE_PROPERTY_PREFIX + "class");
 		String resultDestinationClassName = properties.getProperty(RESULT_DESTINATION_PROPERTY_PREFIX + "class");
 		this.filterSource = (FilterSource) Class.forName(filterSourceClassName).newInstance();
 		this.candidateSource = (CandidateSource<T>) Class.forName(candidateSourceClassName).newInstance();
+		if (statCollectorSourceClassName != null) {
+			this.statCollectorSource = (StatCollectorSource) Class.forName(statCollectorSourceClassName).newInstance();
+		}
 		this.resultDestination = (ResultDestination<T>) Class.forName(resultDestinationClassName).newInstance();
 		this.filterSource.initialize(getTrimmedProperties(FILTER_SOURCE_PROPERTY_PREFIX, properties));
 		this.candidateSource.initialize(getTrimmedProperties(CANDIDATE_SOURCE_PROPERTY_PREFIX, properties), this.candidateClass);
+		if (statCollectorSource != null) {
+			this.statCollectorSource.initialize(getTrimmedProperties(STAT_COLLECTOR_SOURCE_PROPERTY_PREFIX, properties));
+		}
 		this.resultDestination.initialize(getTrimmedProperties(RESULT_DESTINATION_PROPERTY_PREFIX, properties), this.candidateClass);
 	}
 	
@@ -141,14 +151,22 @@ public class SearchUtility<T extends Candidate> {
 					ofe.addFilter(fieldName, filter);
 				}			
 			}
+			if (statCollectorSource != null) {
+				for (String fieldName : statCollectorSource.getStatCollectorFieldNames()) {
+					for (StatCollector<?, ?> statCollector : statCollectorSource.getStatCollectors(fieldName)) {
+						ofe.addStatCollector(fieldName, statCollector);
+					}
+				}
+			}
 			Collection<T> candidates = candidateSource.getCandidates();
 			ofe.addCandidates(candidates);
 			SortedSet<ScoredCandidate<T>> scoredCandidates = ofe.getScoredCandidates();
 			LOGGER.info("Candidates found: " + scoredCandidates.size() + " out of " + candidates.size() + " candidates.");
 			SortedSet<ScoredCandidate<T>> previousScoredCandidates = loadPreviousScoredCandidates(scoredCandidatesFile);
 			List<CandidateChange<T>> changes = ofe.getDifferences(previousScoredCandidates);
+			ofe.computeStatistics();
 			resultDestination.handleSearchResults(ofe.getScoreThreshold(), ofe.getMaxResults(),
-					ofe.getFilterGroups(), changes, scoredCandidates);
+					ofe.getFilterGroups(), ofe.getStatCollectorGroups(), changes, scoredCandidates);
 			saveScoredCandidates(scoredCandidatesFile, scoredCandidates);
 		} catch (Exception e) {
 			LOGGER.error("An error occurred while executing the search.", e);
