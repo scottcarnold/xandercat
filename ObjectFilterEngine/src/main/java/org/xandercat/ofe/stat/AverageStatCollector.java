@@ -29,7 +29,7 @@ public class AverageStatCollector<T extends Number> extends NumericStatCollector
 	}
 
 	@Override
-	public Double computeValue() {
-		return (counter > 0)? accumulator / (double) counter : null;
+	protected Double[] computeValues() {
+		return (counter > 0)? new Double[] {accumulator / (double) counter} : null;
 	}
 }

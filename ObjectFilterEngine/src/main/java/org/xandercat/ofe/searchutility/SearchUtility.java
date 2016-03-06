@@ -165,7 +165,7 @@ public class SearchUtility<T extends Candidate> {
 			SortedSet<ScoredCandidate<T>> previousScoredCandidates = loadPreviousScoredCandidates(scoredCandidatesFile);
 			List<CandidateChange<T>> changes = ofe.getDifferences(previousScoredCandidates);
 			ofe.computeStatistics();
-			resultDestination.handleSearchResults(ofe.getScoreThreshold(), ofe.getMaxResults(),
+			resultDestination.handleSearchResults(candidates.size(), ofe.getScoreThreshold(), ofe.getMaxResults(),
 					ofe.getFilterGroups(), ofe.getStatCollectorGroups(), changes, scoredCandidates);
 			saveScoredCandidates(scoredCandidatesFile, scoredCandidates);
 		} catch (Exception e) {

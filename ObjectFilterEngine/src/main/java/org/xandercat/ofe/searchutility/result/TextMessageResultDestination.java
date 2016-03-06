@@ -74,7 +74,7 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void handleSearchResults(Float threshold, Integer maxResults, 
+	public void handleSearchResults(int totalRecords, Float threshold, Integer maxResults, 
 			Collection<FilterGroup<?>> filterGroups, Collection<StatCollectorGroup<?>> statCollectorGroups,
 			List<CandidateChange<T>> changes, SortedSet<ScoredCandidate<T>> scoredCandidates) {
 		if (!issueMessageOnlyWhenResultsChanged || changes.size() > 0) {
@@ -132,6 +132,7 @@ public abstract class TextMessageResultDestination<T extends Candidate> implemen
 			}
 			if (statCollectorGroups != null && statCollectorGroups.size() > 0) {
 				sb.append("\n\nStatistics:\n\n");
+				sb.append("Total records searched: ").append(totalRecords).append("\n\n");
 				for (StatCollectorGroup<?> statCollectorGroup : statCollectorGroups) {
 					String fieldName = statCollectorGroup.getFieldName();
 					for (StatCollector<?, ?> statCollector : statCollectorGroup.getStatCollectors()) {

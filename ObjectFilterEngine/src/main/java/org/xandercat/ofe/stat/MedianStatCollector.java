@@ -30,9 +30,8 @@ public class MedianStatCollector<T extends Number> extends NumericStatCollector<
 	}
 
 	@Override
-	protected Number computeValue() {
+	protected Number[] computeValues() {
 		Collections.sort(values, comparator);
-		return values.get(values.size() / 2);
+		return new Number[] { values.get(values.size() / 2) };
 	}
-
 }

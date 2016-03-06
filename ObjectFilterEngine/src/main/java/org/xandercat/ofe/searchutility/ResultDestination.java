@@ -35,6 +35,7 @@ public interface ResultDestination<T extends Candidate> {
 	/**
 	 * Does something with the outcome of the search.
 	 * 
+	 * @param totalRecords        the total number of records/candidates searched
 	 * @param threshold           the threshold for matches (from 0 to 1; a percentage); null means no threshold
 	 * @param maxResults          the max results for the search; null means no maximum
 	 * @param filterGroups        the collection of filters for the various fields
@@ -42,7 +43,7 @@ public interface ResultDestination<T extends Candidate> {
 	 * @param changes             the changes in the search results since the last run of the search
 	 * @param scoredCandidates    the search matches and their match percentages
 	 */
-	public void handleSearchResults(Float threshold, Integer maxResults,
+	public void handleSearchResults(int totalRecords, Float threshold, Integer maxResults,
 			Collection<FilterGroup<?>> filterGroups, 
 			Collection<StatCollectorGroup<?>> statCollectorGroups,
 			List<CandidateChange<T>> changes, 
