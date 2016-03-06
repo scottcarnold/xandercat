@@ -26,7 +26,7 @@ public class CountDistinctStatCollector<T> implements StatCollector<T, Integer> 
 	public void addToStats(T item) {
 		int[] count = counts.get(item);
 		if (count == null) {
-			count = new int[] { 1 };
+			count = new int[] { 0 };
 			counts.put(item, count);
 		}
 		count[0]++;
