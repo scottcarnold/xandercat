@@ -21,7 +21,7 @@ public abstract class AbstractNumericFilter<T extends Number> extends AbstractFi
 
 	@Override
 	public boolean isMatch(T item) {
-		return matchStyle == NumericMatchStyle.getMatchStyle(item, number);
+		return NumericMatchStyle.matches(item, number, matchStyle);
 	}
 
 	@Override

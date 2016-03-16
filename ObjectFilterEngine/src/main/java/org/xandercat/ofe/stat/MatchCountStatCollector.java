@@ -3,6 +3,7 @@ package org.xandercat.ofe.stat;
 import java.util.Collections;
 import java.util.List;
 
+import org.xandercat.ofe.filter.AbstractFilter;
 import org.xandercat.ofe.filter.AttributeFilter;
 
 public class MatchCountStatCollector<T> implements StatCollector<T, Integer> {
@@ -31,7 +32,11 @@ public class MatchCountStatCollector<T> implements StatCollector<T, Integer> {
 
 	@Override
 	public String getDescription() {
-		return "Matches for " + filter.getDescription();
+		if (filter instanceof AbstractFilter) {
+			return "Matches for " + ((AbstractFilter<?>) filter).getMatchDescription();
+		} else {
+			return "Matches for " + filter.getDescription();
+		}
 	}
 
 	@Override
