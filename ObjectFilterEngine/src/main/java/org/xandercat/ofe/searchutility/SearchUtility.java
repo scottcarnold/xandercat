@@ -125,7 +125,7 @@ public class SearchUtility<T extends Candidate> {
 		String resultDestinationClassName = properties.getProperty(RESULT_DESTINATION_PROPERTY_PREFIX + "class");
 		this.filterSource = (FilterSource) Class.forName(filterSourceClassName).newInstance();
 		this.candidateSource = (CandidateSource<T>) Class.forName(candidateSourceClassName).newInstance();
-		if (statCollectorSourceClassName != null) {
+		if (statCollectorSourceClassName != null && statCollectorSourceClassName.trim().length() > 0) {
 			this.statCollectorSource = (StatCollectorSource) Class.forName(statCollectorSourceClassName).newInstance();
 		}
 		this.resultDestination = (ResultDestination<T>) Class.forName(resultDestinationClassName).newInstance();
