@@ -23,6 +23,7 @@
 
 
 threshold,       0.75
+maxResults,      4
 trim,            String,  STARTS_WITH, S85,      required
 location,        String,  EQUALS,      San Francisco
 location,        String,  STARTS_WITH, San Diego
