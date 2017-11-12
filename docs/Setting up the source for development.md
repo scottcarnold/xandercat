@@ -1,0 +1,1 @@
+XanderCat OFE is currently being developed on Eclipse and is built with Maven.  Source Control is set up for Git.  I'll add more documentation here when I have time; hopefully this is enough to get you up and running.  
