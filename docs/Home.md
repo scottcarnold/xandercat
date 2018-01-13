@@ -28,14 +28,15 @@ The Tesla Model S CPO Search application utilizes the Search Utility.  It includ
 XanderCat OFE has been written with varying levels of Comma Separated Value (CSV) support to allow people to use XanderCat OFE without needing to do any Java programming.  However, this support does not provide access to all of the functions available in XanderCat OFE.  Please provide feedback if you would like to see the existing CSV support expanded beyond what it currently provides.
 
 CSV support in XanderCat OFE 1.2 is limited as follows:
-|| Function/Capability ||  CSV Support ||
-| Source Objects / Candidates | A custom Java class to represent the source objects is optional; if not provided, a generic MapCandidate class is used as described elsewhere in the documentation. |
-| Candidate Sources | Data for the application can be provided through the use of the CSVCandidateSource class. |
-| Filters |  Common filters are supported through the use of the CSVFilterSource class.  However, the AggregateFilter that combines multiple filters into a single filter is _not_ supported. |
-| Stat Collectors | There is currently no CSV support for Stat Collectors. |
-| Result Destinations | The ConsoleResultDestination and MailResultDestination classes provide a means to send all relevant results in a text message. |
+Function/Capability |  CSV Support
+--------------------|-------------
+Source Objects / Candidates | A custom Java class to represent the source objects is optional; if not provided, a generic MapCandidate class is used as described elsewhere in the documentation.
+Candidate Sources | Data for the application can be provided through the use of the CSVCandidateSource class.
+Filters |  Common filters are supported through the use of the CSVFilterSource class.  However, the AggregateFilter that combines multiple filters into a single filter is _not_ supported.
+Stat Collectors | There is currently no CSV support for Stat Collectors.
+Result Destinations | The ConsoleResultDestination and MailResultDestination classes provide a means to send all relevant results in a text message.
 
 # Documentation
 
-For more information, see the [Documentation](Documentation).
+For more information, see the [Documentation](Documentation.md).
 
