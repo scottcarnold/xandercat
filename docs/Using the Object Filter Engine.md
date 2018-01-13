@@ -1,6 +1,6 @@
 # Using the Object Filter Engine
 The Object Filter Engine has the following methods of interest:
-{code:java}
+```java
 public ObjectFilterEngine()
 public ObjectFilterEngine(float scoreThreshold)
 public ObjectFilterEngine(int maxResults)
@@ -21,7 +21,7 @@ public SortedSet<ScoredCandidate<T>> getScoredCandidates()
 public List<CandidateChange<T>> getDifferences(SortedSet<ScoredCandidate<T>> previousScoredCandidates)
 
 public Collection<StatCollectorGroup<?>> getStatCollectorGroups()
-{code:java}
+```
 As a general order of operations,  you want to construct, add filters, add stat collectors (if any), add candidates, and finally get results.
 # Construction
 Construction is fairly simple. The only consideration is what you want the score threshold and/or max results to be.  The score threshold can range from 0 to 1.  It is the percent match threshold that a candidate must exceed to be included in the search results.  (e.g. if you set the score threshold to 0.6, then the results will only include matches that were considered to be at least a 60% match).  Max results is the maximum number of results you want from the search.  If this maximum is reached, the object filter engine will keep the highest percent matches.  If you provide neither, the object filter engine uses default values. 
