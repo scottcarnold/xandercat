@@ -2,7 +2,7 @@
 
 Download the latest release.  Create a folder where you want the application to reside at.  Lets say you want to use c:\ofe_demo.  Unzip the release to that folder.  You should something like the following in that folder after unzipping it:
 
-{{
+`
 lib/
 XanderCatOFE-1.1.jar
 cposearch.bat
@@ -10,11 +10,11 @@ cposearch.properties
 ev-cpo-20160211.htm
 example-filters.txt
 log4j.properties
-}}
+`
 
 Now take a look at _cposearch.properties_.  This is where the demo application setup resides.  It will look like this:
 
-{{
+`
 ############## GENERIC SEARCH UTILITY PROPERTIES ##########################
 
 logging.properties.file=log4j.properties
@@ -56,7 +56,7 @@ result.destination.report.only.when.changes.exist=true
 #result.destination.mail.from=
 #result.destination.mail.username=
 #result.destination.mail.password=
-}}
+`
 
 Any line starting with a pound sign (#) is a comment (or commented out).
 
@@ -72,7 +72,7 @@ Lets leave it as is.  If you were to run it now, it would read the filters in _e
 
 Now take a look at your filters:
 
-{{
+`
 # Valid values for fieldName and fieldType are:
 #   vin (String), cpoInv (String), location (String), trim (String), aptp (String), 
 #   dualMotor (Boolean), rearFacingSeats (Boolean), coldWeatherPackage (Boolean), 
@@ -109,13 +109,13 @@ price,           Integer, LESS_THAN,   80000,    required
 price,           Integer, LESS_THAN,   70000
 miles,           Integer, LESS_THAN,   40000,    required
 dateAdded,       Date,    AFTER,       1/1/2016, required
-}}
+`
 
 Based on these filters, you want to find a Tesla Model S85 with a pano roof for less than $80,000 with less than 40,000 miles that was listed after January 1st, 2016.  Those attributes are required.  You also want to exclude cars with black interior, as well as cars with red exterior color.  In addition, you strongly prefer Nappa leather interior.  You also prefer the car be located in San Francisco or San Diego, you prefer white color and 21 inch wheels, and you prefer the price be less than $70,000 if possible.  You also have a slight preference for brown exterior color, though you don't like it as much as white.  And after all that, you only want to see cars that are considered at least a 75% match for that criteria.
 
 Now there are no previous search results yet, as you have never run the search before.  So all the matches found will be considered new matches.  Run it and see what the output looks like.  I should look like this:
 
-{{
+`
 CPO Model S Search
 Threshold for match is set at 75%
 
@@ -166,7 +166,7 @@ dateAdded AFTER Fri Jan 01 00:00:00 CST 2016 [required](required) [weight of 0.5
 interior CONTAINS "Nappa" [weight of 0.75](weight-of-0.75)
 interior CONTAINS "Black" [excluded](excluded)
 miles LESS_THAN 40,000 [required](required) [weight of 0.5](weight-of-0.5)
-}}
+`
 
 :_Note:  The null values you are seeing for some fields is because those values are only available if you have a subscription to the website.  If you subscribed to the ev-cpo.com website, logged in, saved a copy of the HTML page, and used that as the input, you would then have all of those values to search upon as well._
 
