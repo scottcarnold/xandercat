@@ -32,7 +32,8 @@ Example:
 
 Assume we have the following filters:
 
-|| filter || field name || filter weight || matched candidate? ||
+| filter | field name | filter weight | matched candidate? |
+| --- | --- | --- | --- |
 | 1 | color | 0.5 | yes |
 | 2 | flavor | 0.25 | yes |
 | 3 | flavor | 0.5 | no |
@@ -42,7 +43,8 @@ Assume we have the following filters:
 
 Now assess those filters by field:
 
-|| field name || max matched weight || max possible weight ||
+| field name | max matched weight | max possible weight |
+| --- | --- | --- |
 | color | 0.5 | 0.5 | 
 | flavor | 0.25 | 0.75 | 
 | price | 0.75 | 0.75 |
