@@ -13,7 +13,7 @@ Some example use cases:
 	* If you don't want to mess with writing any Java code or building your own project, you can use the provided CSVCandidateSource, and have some other script or tool that dumps out a CSV file that the CSVCandidateSource can pick up when it runs.
 
 For further details, see the following sections:
-* [Installing the latest demo release](Installing-the-latest-demo-release)
+* [Installing the latest demo release](Installing%20the%20latest%20demo%20release)
 	* [Example run through of the demo](Example%20run%20through%20of%20the%20demo.md) <-- If you want a quick look at what this is all about, check here!
 * [Setting up the source for development](Setting-up-the-source-for-development)
 * [Using the Object Filter Engine](Using-the-Object-Filter-Engine)
