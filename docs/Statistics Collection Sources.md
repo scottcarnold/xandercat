@@ -1,6 +1,6 @@
 A stat collector source defines where the statistics collectors come from for searches. It is defined by the StatCollectorSource interface as shown below (XanderCat OFE 1.2):
 
-{code:java}
+```java
 /**
  * Interface used with SearchUtility to define the stat collectors that will be used in the object search.
  * 
@@ -35,11 +35,11 @@ public interface StatCollectorSource {
 	 */
 	public List<StatCollector<?, ?>> getStatCollectors(String fieldName);
 }
-{code:java}
+```
 
 At this time, there is no CSVStatCollectorSource available for use.  However, writing your won stat collector source is pretty straight forward if you have any experience with Java programming.  Take a look at the stat collector source for the CPO Model S search application to see an example of what it can look like:
 
-{code:java}
+```java
 public class CPOStatCollectorSource extends AbstractStatCollectorSource {
 
 	@Override
@@ -57,5 +57,5 @@ public class CPOStatCollectorSource extends AbstractStatCollectorSource {
 		addStatCollector("year", new CountDistinctStatCollector<Integer>(Integer.class));
 	}
 }
-{code:java}
+```
 
