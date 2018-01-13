@@ -14,7 +14,7 @@ Some example use cases:
 
 For further details, see the following sections:
 * [Installing the latest demo release](Installing-the-latest-demo-release)
-	* [Example run through of the demo](Example-run-through-of-the-demo) <-- If you want a quick look at what this is all about, check here!
+	* [Example run through of the demo](Example run through of the demo) <-- If you want a quick look at what this is all about, check here!
 * [Setting up the source for development](Setting-up-the-source-for-development)
 * [Using the Object Filter Engine](Using-the-Object-Filter-Engine)
 	* [Requirements for your Candidate objects](Requirements-for-your-Candidate-objects)
