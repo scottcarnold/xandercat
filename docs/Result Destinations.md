@@ -2,7 +2,7 @@
 
 A result destination defines where search results are sent.  It is defined by the ResultDestination interface as shown below (XanderCat OFE 1.2):
 
-{code:java}
+```java
 /**
  * Interface used with the SearchUtility that defines what to do with the search results.
  * 
@@ -45,7 +45,7 @@ public interface ResultDestination<T extends Candidate> {
 	 */
 	public void handleError(Exception e);
 }
-{code:java}
+```
 
 # TextMessageResultDestination
 
@@ -64,7 +64,9 @@ Note that you can generally get the output routed to a file using this as well. 
 The MailResultDestination extends the TextMessageResultDestination, and sends the text message as an email to a list of email addresses.
 
 The MailResultDestination accepts the following properties:
-|| Property || Disposition || Value ||
+
+| Property | Disposition | Value |
+| --- | --- | --- |
 | mail.username | Required | username for the from mail account |
 | mail.password | Required | password for the from mail account |
 | mail.from | Required | email address for the from mail account |
@@ -76,11 +78,13 @@ MailResultDestination expects to use password authentication, which is why the u
 
 As an example of additional JavaMail spec properties you may need -- for Gmail, in addition to the required properties shown above, you need to specify the following properties from the JavaMail spec:
 
-|| Property || Value ||
+| Property | Value |
+| --- | --- |
 | mail.smtp.auth | true |
 | mail.smtp.starttls.enable | true |
 | mail.smtp.host | smtp.gmail.com |
 | mail.smtp.port | 587 |
+
 :_Note:  For Gmail, you can send a mail from an email account and to that same email account without any trouble._
 
 
