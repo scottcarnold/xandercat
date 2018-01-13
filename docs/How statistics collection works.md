@@ -6,7 +6,9 @@ Like filters, stat collectors are associated with a single field of the candidat
 The getStatistics() method can return any number of data point objects, each of which must implement the DataPoint interface.  Each data point has a value, and optionally, a label for each value.  The value type is defined by the <U> generic parameter on the stat collector.  
 
 XanderCat OFE 1.2 provides the following stat collectors:
-|| Stat Collector || Description ||
+
+| Stat Collector | Description |
+| --- | --- |
 | AverageStatCollector | Calculates the average value for a numeric field. |
 | CountDistinctStatCollector | Counts how many times it encounters each distinct variation of field value. |
 | MatchCountStatCollector | Counts how many times a field value matches a given filter. |
