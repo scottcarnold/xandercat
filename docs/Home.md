@@ -1,5 +1,4 @@
 # Project Description
-_(the CodePlex one-liner description -- it's a CodePlex thing)_
 
 Object Filtering Engine for running collections of objects against a set of filters.
 
@@ -38,5 +37,5 @@ CSV support in XanderCat OFE 1.2 is limited as follows:
 
 # Documentation
 
-For more information, see the [Documentation](http://xandercat.codeplex.com/documentation).
+For more information, see the [Documentation](Documentation).
 
