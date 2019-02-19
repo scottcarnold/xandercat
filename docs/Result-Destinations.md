@@ -57,7 +57,7 @@ The ConsoleResultDestination extends the TextMessageResultDestination, and simpl
 
 Note that you can generally get the output routed to a file using this as well.  For example, in the batch script for the Tesla Model S CPO search example application, it by default routes the output to a text file.  You can see this if you use an editor to look at the batch file.  It will look something like follows:
 
-{{java -jar XanderCatOFE-1.1.jar cposearch.properties > copsearch-results.txt}}
+`java -jar XanderCatOFE-1.1.jar cposearch.properties > copsearch-results.txt`
 
 # MailResultDestination
 
