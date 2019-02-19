@@ -104,6 +104,7 @@ CSVFilterSource does not currently support aggregate filters.
 ## Match Types
 
 Match types include the following:
+
 | Field Type | Valid Values |
 | --- | --- |
 | String | EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH |
