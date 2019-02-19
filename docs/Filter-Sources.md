@@ -106,10 +106,10 @@ CSVFilterSource does not currently support aggregate filters.
 Match types include the following:
 | Field Type | Valid Values |
 | --- | --- |
-| String | `EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH` |
-| Date | `EQUALS, BEFORE, AFTER` |
-| All number types | `EQUALS, LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUALS, GREATER_THAN_OR_EQUALS` |
-| Boolean | `EQUALS` |
+| String | EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH |
+| Date | EQUALS, BEFORE, AFTER |
+| All number types | EQUALS, LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUALS, GREATER_THAN_OR_EQUALS |
+| Boolean | EQUALS |
 
 ## Match Values
 
