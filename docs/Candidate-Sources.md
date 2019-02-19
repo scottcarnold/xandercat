@@ -2,7 +2,7 @@
 
 A candidate source defines where the objects you want to search come from.  It is defined by the CandidateSource interface as shown below:
 
-{code:java}
+```java
 /**
  * Interface used with SearchUtility that defines how to obtain the collection of candidates to be searched.
  * 
@@ -33,13 +33,14 @@ public interface CandidateSource<T> {
 	 */
 	public Collection<T> getCandidates() throws Exception;
 }
-{code:java}
+```
 
 # CSVCandidateSource
 
 CSVCandidateSource provides a way to load objects to search from a Comma Separated Value (CSV) file.  
 
 CSVCandidateSource has the following properties associated with it:
+
 || Property || Disposition || Value ||
 | file | Required | The path and file name for the CSV file |
 | fields | Required | An ordered list of the field names, comma separated; the order should match what order used in the CSV input file. |
