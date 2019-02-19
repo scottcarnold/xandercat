@@ -2,7 +2,7 @@
 
 A filter source defines where the search filters come from and what the overall match percent threshold should be for searches.  It is defined by the FilterSource interface as shown below (XanderCat OFE 1.2):
 
-{code:java}
+```java
 /**
  * Interface used with SearchUtility to define the filters that will be used in the object search.
  * 
@@ -51,7 +51,7 @@ public interface FilterSource {
 	 */
 	public List<AttributeFilter<?>> getFilters(String fieldName);
 }
-{code:java}
+```
 
 # CSVFilterSource
 
