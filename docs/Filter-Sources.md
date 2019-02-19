@@ -57,7 +57,7 @@ public interface FilterSource {
 
 As an alternative to writing your own FilterSource, the Search Utility comes with a CSVFilterSource for pulling filter information from a Comma Separated Value (CSV) file.  The Tesla Model S CPO Search example application gives an example of this.  An example of the filters from the CSV file is shown below:
 
-`
+```
 threshold,       0.75
 maxResults,      4
 trim,            String,  STARTS_WITH, S85,      required
@@ -74,7 +74,7 @@ price,           Integer, LESS_THAN,   80000,    required
 price,           Integer, LESS_THAN,   70000
 miles,           Integer, LESS_THAN,   40000,    required
 dateAdded,       Date,    AFTER,       1/1/2016, required
-`
+```
 
 Lines in the filter file can be any of the following:
 * Blank lines
@@ -106,10 +106,10 @@ CSVFilterSource does not currently support aggregate filters.
 Match types include the following:
 | Field Type | Valid Values |
 | --- | --- |
-| String | {{EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH}} |
-| Date | {{EQUALS, BEFORE, AFTER}} |
-| All number types | {{EQUALS, LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUALS, GREATER_THAN_OR_EQUALS}} |
-| Boolean | {{EQUALS}} |
+| String | `EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH` |
+| Date | `EQUALS, BEFORE, AFTER` |
+| All number types | `EQUALS, LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUALS, GREATER_THAN_OR_EQUALS` |
+| Boolean | `EQUALS` |
 
 ## Match Values
 
