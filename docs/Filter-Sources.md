@@ -57,7 +57,7 @@ public interface FilterSource {
 
 As an alternative to writing your own FilterSource, the Search Utility comes with a CSVFilterSource for pulling filter information from a Comma Separated Value (CSV) file.  The Tesla Model S CPO Search example application gives an example of this.  An example of the filters from the CSV file is shown below:
 
-{{
+`
 threshold,       0.75
 maxResults,      4
 trim,            String,  STARTS_WITH, S85,      required
@@ -74,7 +74,7 @@ price,           Integer, LESS_THAN,   80000,    required
 price,           Integer, LESS_THAN,   70000
 miles,           Integer, LESS_THAN,   40000,    required
 dateAdded,       Date,    AFTER,       1/1/2016, required
-}}
+`
 
 Lines in the filter file can be any of the following:
 * Blank lines
@@ -84,12 +84,12 @@ Lines in the filter file can be any of the following:
 * Filters, which can contain anywhere from 4 to 6 comma separated values.
 
 For the filters, the comma separated values, in order, are:
-# field name
-# field type
-# match type
-# match value
-# weight/required/excluded attribute
-# weight/required/excluded attribute
+1. field name
+2. field type
+3. match type
+4. match value
+5. weight/required/excluded attribute
+6. weight/required/excluded attribute
 
 ## Field Names
 
@@ -104,7 +104,8 @@ CSVFilterSource does not currently support aggregate filters.
 ## Match Types
 
 Match types include the following:
-|| Field Type || Valid Values ||
+| Field Type | Valid Values |
+| --- | --- |
 | String | {{EQUALS, CONTAINS, STARTS_WITH, ENDS_WITH}} |
 | Date | {{EQUALS, BEFORE, AFTER}} |
 | All number types | {{EQUALS, LESS_THAN, GREATER_THAN, LESS_THAN_OR_EQUALS, GREATER_THAN_OR_EQUALS}} |
@@ -118,7 +119,8 @@ Match values should be whatever you want to compare against.  Values can optiona
 
 You can have from 0 to 2 additional attributes for your filters.  The values for these are case insensitive.  Valid values are as follows:
 
-|| Value || Meaning ||
+| Value | Meaning |
+| --- | --- |
 | required | filter must match the candidate, or the candidate gets thrown out |
 | excluded | filter must **not** match the candidate, or the candidate gets thrown out |
 | maximum | filter should have maximum possible weight (1.0) |
