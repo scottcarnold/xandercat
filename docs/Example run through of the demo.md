@@ -122,23 +122,22 @@ Threshold for match is set at 75%
 Changes Since Last Report:
 
 ADDED :
-76% CPOModelS [vin=P19847, url=http://www.teslamotors.com//models/preowned/P19847, cpoInv=CPO, location=New England, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Dark Blue Metallic, roof=Pano, wheels=21-Silver, interior=Tan Nappa, year=2013, miles=39233, price=62800, dateAdded=Tue Jan 05 13:00:00 CST 2016](vin=P19847,-url=http___www.teslamotors.com__models_preowned_P19847,-cpoInv=CPO,-location=New-England,-trim=S85,-aptp=TP,-dualMotor=null,-rearFacingSeats=null,-coldWeatherPackage=null,-soundStudio=null,-superchargerEnabled=null,-smartAirSuspension=null,-dualChargers=null,-color=Dark-Blue-Metallic,-roof=Pano,-wheels=21-Silver,-interior=Tan-Nappa,-year=2013,-miles=39233,-price=62800,-dateAdded=Tue-Jan-05-13_00_00-CST-2016)
+76% CPOModelS [vin=P19847, url=http://www.teslamotors.com//models/preowned/P19847, cpoInv=CPO, location=New England, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Dark Blue Metallic, roof=Pano, wheels=21-Silver, interior=Tan Nappa, year=2013, miles=39233, price=62800, dateAdded=Tue Jan 05 13:00:00 CST 2016]
 
 ADDED :
-76% CPOModelS [vin=P22679, url=http://www.teslamotors.com//models/preowned/P22679, cpoInv=CPO, location=Wash, DC, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Black Solid, roof=Pano, wheels=21-Silver, interior=Tan Nappa, year=2013, miles=13602, price=64000, dateAdded=Tue Jan 05 15:00:00 CST 2016](vin=P22679,-url=http___www.teslamotors.com__models_preowned_P22679,-cpoInv=CPO,-location=Wash,-DC,-trim=S85,-aptp=TP,-dualMotor=null,-rearFacingSeats=null,-coldWeatherPackage=null,-soundStudio=null,-superchargerEnabled=null,-smartAirSuspension=null,-dualChargers=null,-color=Black-Solid,-roof=Pano,-wheels=21-Silver,-interior=Tan-Nappa,-year=2013,-miles=13602,-price=64000,-dateAdded=Tue-Jan-05-15_00_00-CST-2016)
+76% CPOModelS [vin=P22679, url=http://www.teslamotors.com//models/preowned/P22679, cpoInv=CPO, location=Wash, DC, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Black Solid, roof=Pano, wheels=21-Silver, interior=Tan Nappa, year=2013, miles=13602, price=64000, dateAdded=Tue Jan 05 15:00:00 CST 2016]
 
 ADDED :
-76% CPOModelS [vin=P29450, url=http://www.teslamotors.com//models/preowned/P29450, cpoInv=CPO, location=Wash, DC, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Grey Metallic, roof=Pano, wheels=21-Grey, interior=Tan Nappa, year=2014, miles=20751, price=61500, dateAdded=Fri Jan 15 18:20:00 CST 2016](vin=P29450,-url=http___www.teslamotors.com__models_preowned_P29450,-cpoInv=CPO,-location=Wash,-DC,-trim=S85,-aptp=TP,-dualMotor=null,-rearFacingSeats=null,-coldWeatherPackage=null,-soundStudio=null,-superchargerEnabled=null,-smartAirSuspension=null,-dualChargers=null,-color=Grey-Metallic,-roof=Pano,-wheels=21-Grey,-interior=Tan-Nappa,-year=2014,-miles=20751,-price=61500,-dateAdded=Fri-Jan-15-18_20_00-CST-2016)
+76% CPOModelS [vin=P29450, url=http://www.teslamotors.com//models/preowned/P29450, cpoInv=CPO, location=Wash, DC, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Grey Metallic, roof=Pano, wheels=21-Grey, interior=Tan Nappa, year=2014, miles=20751, price=61500, dateAdded=Fri Jan 15 18:20:00 CST 2016]
 
 ADDED :
-76% CPOModelS [vin=P27889, url=http://www.teslamotors.com//models/preowned/P27889, cpoInv=CPO, location=Los Angeles, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Dark Blue Metallic, roof=Pano, wheels=21-Silver, interior=Tan Nappa, year=2013, miles=23083, price=69300, dateAdded=Tue Jan 12 14:00:00 CST 2016](vin=P27889,-url=http___www.teslamotors.com__models_preowned_P27889,-cpoInv=CPO,-location=Los-Angeles,-trim=S85,-aptp=TP,-dualMotor=null,-rearFacingSeats=null,-coldWeatherPackage=null,-soundStudio=null,-superchargerEnabled=null,-smartAirSuspension=null,-dualChargers=null,-color=Dark-Blue-Metallic,-roof=Pano,-wheels=21-Silver,-interior=Tan-Nappa,-year=2013,-miles=23083,-price=69300,-dateAdded=Tue-Jan-12-14_00_00-CST-2016)
+76% CPOModelS [vin=P27889, url=http://www.teslamotors.com//models/preowned/P27889, cpoInv=CPO, location=Los Angeles, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Dark Blue Metallic, roof=Pano, wheels=21-Silver, interior=Tan Nappa, year=2013, miles=23083, price=69300, dateAdded=Tue Jan 12 14:00:00 CST 2016]
 
 ADDED :
-76% CPOModelS [vin=P32543, url=http://www.teslamotors.com//models/preowned/P32543, cpoInv=CPO, location=New York, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Pearl White, roof=Pano, wheels=19-Base, interior=Tan Nappa, year=2014, miles=27215, price=62000, dateAdded=Tue Jan 12 15:00:00 CST 2016](vin=P32543,-url=http___www.teslamotors.com__models_preowned_P32543,-cpoInv=CPO,-location=New-York,-trim=S85,-aptp=TP,-dualMotor=null,-rearFacingSeats=null,-coldWeatherPackage=null,-soundStudio=null,-superchargerEnabled=null,-smartAirSuspension=null,-dualChargers=null,-color=Pearl-White,-roof=Pano,-wheels=19-Base,-interior=Tan-Nappa,-year=2014,-miles=27215,-price=62000,-dateAdded=Tue-Jan-12-15_00_00-CST-2016)
+76% CPOModelS [vin=P32543, url=http://www.teslamotors.com//models/preowned/P32543, cpoInv=CPO, location=New York, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Pearl White, roof=Pano, wheels=19-Base, interior=Tan Nappa, year=2014, miles=27215, price=62000, dateAdded=Tue Jan 12 15:00:00 CST 2016]
 
 ADDED :
-76% CPOModelS [vin=P27379, url=http://www.teslamotors.com//models/preowned/P27379, cpoInv=CPO, location=San Francisco, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Black Solid, roof=Pano, wheels=19-Base, interior=Grey Nappa, year=2013, miles=26425, price=59100, dateAdded=Tue Jan 05 15:10:00 CST 2016](vin=P27379,-url=http___www.teslamotors.com__models_preowned_P27379,-cpoInv=CPO,-location=San-Francisco,-trim=S85,-aptp=TP,-dualMotor=null,-rearFacingSeats=null,-coldWeatherPackage=null,-soundStudio=null,-superchargerEnabled=null,-smartAirSuspension=null,-dualChargers=null,-color=Black-Solid,-roof=Pano,-wheels=19-Base,-interior=Grey-Nappa,-year=2013,-miles=26425,-price=59100,-dateAdded=Tue-Jan-05-15_10_00-CST-2016)
-
+76% CPOModelS [vin=P27379, url=http://www.teslamotors.com//models/preowned/P27379, cpoInv=CPO, location=San Francisco, trim=S85, aptp=TP, dualMotor=null, rearFacingSeats=null, coldWeatherPackage=null, soundStudio=null, superchargerEnabled=null, smartAirSuspension=null, dualChargers=null, color=Black Solid, roof=Pano, wheels=19-Base, interior=Grey Nappa, year=2013, miles=26425, price=59100, dateAdded=Tue Jan 05 15:10:00 CST 2016]
 
 Current Candidates:
 
@@ -152,20 +151,20 @@ Current Candidates:
 
 Current Filters:
 
-roof EQUALS "Pano" [required](required) [weight of 0.5](weight-of-0.5)
-wheels STARTS_WITH "21" [weight of 0.5](weight-of-0.5)
-trim STARTS_WITH "S85" [required](required) [weight of 0.5](weight-of-0.5)
-color CONTAINS "Red" [excluded](excluded)
-color CONTAINS "White" [weight of 0.5](weight-of-0.5)
-color CONTAINS "Brown" [weight of 0.25](weight-of-0.25)
-price LESS_THAN 80,000 [required](required) [weight of 0.5](weight-of-0.5)
-price LESS_THAN 70,000 [weight of 0.5](weight-of-0.5)
-location EQUALS "San Francisco" [weight of 0.5](weight-of-0.5)
-location STARTS_WITH "San Diego" [weight of 0.5](weight-of-0.5)
-dateAdded AFTER Fri Jan 01 00:00:00 CST 2016 [required](required) [weight of 0.5](weight-of-0.5)
-interior CONTAINS "Nappa" [weight of 0.75](weight-of-0.75)
-interior CONTAINS "Black" [excluded](excluded)
-miles LESS_THAN 40,000 [required](required) [weight of 0.5](weight-of-0.5)
+roof EQUALS "Pano" [required] [weight of 0.5]
+wheels STARTS_WITH "21" [weight of 0.5]
+trim STARTS_WITH "S85" [required] [weight of 0.5]
+color CONTAINS "Red" [excluded]
+color CONTAINS "White" [weight of 0.5]
+color CONTAINS "Brown" [weight of 0.25]
+price LESS_THAN 80,000 [required] [weight of 0.5]
+price LESS_THAN 70,000 [weight of 0.5]
+location EQUALS "San Francisco" [weight of 0.5]
+location STARTS_WITH "San Diego" [weight of 0.5]
+dateAdded AFTER Fri Jan 01 00:00:00 CST 2016 [required] [weight of 0.5]
+interior CONTAINS "Nappa" [weight of 0.75]
+interior CONTAINS "Black" [excluded]
+miles LESS_THAN 40,000 [required] [weight of 0.5]
 ```
 
 :_Note:  The null values you are seeing for some fields is because those values are only available if you have a subscription to the website.  If you subscribed to the ev-cpo.com website, logged in, saved a copy of the HTML page, and used that as the input, you would then have all of those values to search upon as well._
