@@ -41,7 +41,8 @@ CSVCandidateSource provides a way to load objects to search from a Comma Separat
 
 CSVCandidateSource has the following properties associated with it:
 
-|| Property || Disposition || Value ||
+| Property | Disposition | Value |
+| --- | --- | --- |
 | file | Required | The path and file name for the CSV file |
 | fields | Required | An ordered list of the field names, comma separated; the order should match what order used in the CSV input file. |
 | field.types | Optional | Added in XanderCat OFE 1.2.  An ordered list of field data types, comma separated; each data type should be a fully qualified class name or the name of a class from the java.lang package.  |
