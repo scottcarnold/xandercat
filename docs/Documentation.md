@@ -22,8 +22,8 @@ For further details, see the following sections:
 	* [How statistics collection works](How%20statistics%20collection%20works.md) (v1.2)
 * [Using the Search Utility](Using%20the%20Search%20Utility.md)
 	* [Properties file setup](Properties%20file%20setup.md)
-	* [Filter Sources](Filter%20Sources.md)
-	* [Candidate Sources](Candidate%20Sources.md)
+	* [Filter Sources](Filter-Sources.md)
+	* [Candidate Sources](Candidate-Sources.md)
 	* [Statistics Collection Sources](Statistics%20Collection%20Sources.md) (v1.2)
-	* [Result Destinations](Result%20Destinations.md)
+	* [Result Destinations](Result-Destinations.md)
 
